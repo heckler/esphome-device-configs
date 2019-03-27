@@ -1,0 +1,53 @@
+# -----------------------------------------------------------------------------
+# ESPHome config file for the balcony sensors module
+# CAH 2019-03-17
+#
+# DHT22     : D5
+# DSB18B20  : D7 (balcony)
+# DSB18B20  : D6 (living-room)
+# -----------------------------------------------------------------------------
+
+esphome:
+  name: balcony_sensors
+  platform: ESP8266
+  board: nodemcuv2
+
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+  manual_ip:
+    static_ip: 192.168.6.41
+    gateway: 192.168.6.1
+    subnet: 255.255.255.0
+
+ota:
+  safe_mode: True
+  password: !secret ota_password
+
+#logger:
+#  level: INFO
+  
+status_led:
+  pin:
+    number: D4
+    inverted: True
+
+api:
+
+
+sensor:
+
+  - platform: dht
+    pin: D5
+    model: DHT22
+    temperature:
+      name: "Balcony Temperature"
+    humidity:
+      name: "Balcony Humidity"
+    update_interval: 30s
+    
+  - platform: wifi_signal
+    name: "WiFi Signal Sensor"
+
+  - platform: uptime
+    name: "Uptime Sensor"

@@ -1,0 +1,24 @@
+# CAH 2019-03-17
+
+esphome:
+  name: test
+  platform: ESP8266
+  board: nodemcuv2
+
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+  manual_ip:
+    static_ip: 192.168.6.49
+    gateway: 192.168.6.1
+    subnet: 255.255.255.0
+
+ota:
+  safe_mode: True
+  password: !secret ota_password
+
+
+status_led:
+  pin:
+    number: D4
+    inverted: False
