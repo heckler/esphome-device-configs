@@ -1,0 +1,53 @@
+# -----------------------------------------------------------------------------
+# ESPHome config file for the ESP32Cam module 02
+# CAH 2019-10-27
+#
+# -----------------------------------------------------------------------------
+
+
+esphome:
+  name: esp32cam02
+  platform: ESP32
+  board: esp-wrover-kit
+
+
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+
+
+# Enable logging
+logger:
+
+
+# Enable Home Assistant API
+api:
+
+
+ota:
+  safe_mode: True
+  password: !secret ota_password
+
+
+status_led:
+  pin:
+    number: GPIO33
+    inverted: True
+
+
+# ESP32Cam configuration
+esp32_camera:
+  name: ESP32Cam_02
+  external_clock:
+    pin: GPIO0
+    frequency: 20MHz
+  i2c_pins:
+    sda: GPIO26
+    scl: GPIO27
+  data_pins: [GPIO5, GPIO18, GPIO19, GPIO21, GPIO36, GPIO39, GPIO34, GPIO35]
+  vsync_pin: GPIO25
+  href_pin: GPIO23
+  power_down_pin: GPIO32
+  pixel_clock_pin: GPIO22
+  resolution: 640x480
+  jpeg_quality: 10

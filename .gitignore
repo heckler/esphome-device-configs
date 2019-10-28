@@ -6,3 +6,6 @@ known_devices.yaml
 
 .esphome/*
 balcony_sensors/*
+esp32cam01/*
+esp32cam02/*
+
