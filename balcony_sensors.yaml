@@ -24,7 +24,7 @@ ota:
   safe_mode: True
   password: !secret ota_password
 
-#logger:
+logger:
 #  level: INFO
   
 status_led:

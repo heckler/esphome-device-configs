@@ -19,6 +19,16 @@ Configuration definitions for local ESPHome devices.
 
 `esphome hello-world.yaml run`
 
+### ESPHome dashboard
+
+There is a simple dashboard webserver in ESPHome.  From the folder where the device configs are stored, execute the following command:
+
+`esphome . dashboard`
+
+Then, navigate to the following address: [http://localhost:6052/](http://localhost:6052/)
+
+------------------------------------------------------------------------------------------------
+
 ## Device-specific configurations
 
 ### ESP32Cam
