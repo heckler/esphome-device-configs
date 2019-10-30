@@ -59,3 +59,7 @@ text_sensor:
 switch:
   - platform: restart
     name: "Restart"
+
+sensor:
+  - platform: uptime
+    name: "Uptime Sensor"
