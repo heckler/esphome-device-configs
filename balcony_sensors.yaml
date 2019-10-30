@@ -51,3 +51,11 @@ sensor:
 
   - platform: uptime
     name: "Uptime Sensor"
+
+text_sensor:
+  - platform: version
+    name: "ESPHome Version"
+
+switch:
+  - platform: restart
+    name: "Restart"

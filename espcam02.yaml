@@ -51,3 +51,11 @@ esp32_camera:
   pixel_clock_pin: GPIO22
   resolution: 640x480
   jpeg_quality: 10
+
+text_sensor:
+  - platform: version
+    name: "ESPHome Version"
+
+switch:
+  - platform: restart
+    name: "Restart"
