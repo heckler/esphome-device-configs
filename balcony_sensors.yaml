@@ -15,6 +15,7 @@ esphome:
 wifi:
   ssid: !secret wifi_ssid
   password: !secret wifi_password
+  power_save_mode: light
   manual_ip:
     static_ip: 192.168.6.41
     gateway: 192.168.6.1
@@ -47,10 +48,10 @@ sensor:
     update_interval: 30s
     
   - platform: wifi_signal
-    name: "WiFi Signal Sensor"
+    name: "WiFi Signal"
 
   - platform: uptime
-    name: "Uptime Sensor"
+    name: "Balcony Uptime"
 
 text_sensor:
   - platform: version
@@ -58,4 +59,4 @@ text_sensor:
 
 switch:
   - platform: restart
-    name: "Restart"
+    name: "Balcony Restart"
