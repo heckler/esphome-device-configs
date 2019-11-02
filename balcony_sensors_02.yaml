@@ -1,0 +1,93 @@
+# -----------------------------------------------------------------------------
+# ESPHome config file for the second version of the balcony sensors module
+# CAH 2019-11-01
+#
+# This board has a BME280 temperature, humidity and barometric pressure sensor,
+# a PIR motion sensor and an SSD1306 monochrome OLED display; BME280 and the 
+# SSD1306 are connected to the same I2C bus, and the PIR has its own GPIO.
+#
+#   BME280      I2C bus
+#   SSD1306     I2C bus
+#   PIR         D7
+#   I2C SDA     GPIO4 (D2?)
+#   I2C SLC     GPIO5 (D1?)
+#   Status      D4 (built-in)
+#
+# A simple automation is defined in the device to display the sensor data
+# for a short period of time when motion is detected by the PIR.
+#
+# Tutorials:
+#
+#   - https://esphome.io/cookbook/bme280_environment.html
+#   - https://esphome.io/cookbook/display_time_temp_oled.html
+#   - https://esphome.io/cookbook/pir.html
+# 
+# -----------------------------------------------------------------------------
+
+esphome:
+  name: balcony_sensors_02
+  platform: ESP8266
+  board: nodemcuv2
+
+wifi:
+  ssid: QATSI
+  password: !secret wifi_password
+  power_save_mode: light
+
+ota:
+  safe_mode: True
+  password: !secret ota_password
+
+logger:
+  level: DEBUG
+  
+status_led:
+  pin:
+    number: D4
+    inverted: True
+
+api:
+
+# I2C bus: https://esphome.io/components/i2c.html#i2c
+i2c:
+  sda: GPIO4
+  scl: GPIO5
+  scan: True
+  id: bus_a
+
+# SSD1306 display: https://esphome.io/components/display/ssd1306.html
+display:
+  - platform: ssd1306_i2c
+    model: "SSD1306 128x64"
+    address: 0x3C
+
+
+sensor:
+
+  # BME280: https://esphome.io/components/sensor/bme280.html
+  - platform: bme280
+    temperature:
+      name: "Balcony Temperature"
+      oversampling: 16x
+    pressure:
+      name: "Balcony Pressure"
+    humidity:
+      name: "Balcony Humidity"
+    address: 0x77
+    update_interval: 60s
+
+  - platform: wifi_signal
+    name: "Balcony WiFi Signal"
+
+  - platform: uptime
+    name: "Balcony Uptime"
+
+
+text_sensor:
+  - platform: version
+    name: "ESPHome Version"
+
+
+switch:
+  - platform: restart
+    name: "Balcony Restart"
