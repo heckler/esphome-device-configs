@@ -19,7 +19,7 @@ wifi:
       password: !secret wifi_password_2
     - ssid: !secret wifi_ssid_3
       password: !secret wifi_password_3
-  power_save_mode: light
+  power_save_mode: none
   ap:
     ssid: ESP32Cam_01 Fallback Hotspot
     password: !secret ap_password
