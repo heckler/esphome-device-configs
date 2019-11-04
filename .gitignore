@@ -10,4 +10,5 @@ balcony_sensors_02/*
 esp32cam01/*
 esp32cam02/*
 pir_test/*
+uptime_test/*
 

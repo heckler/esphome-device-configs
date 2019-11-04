@@ -1,0 +1,46 @@
+# -----------------------------------------------------------------------------
+# Uptime test, to see how the node behaves before it stops responding.
+#
+# CAH 2019-11-04
+#
+# Conclusion: setting power_save_mode:light under wifi was causing the ESP8266
+# to lose connection with the network after a few seconds of activity; setting
+# it to none had the result of the device behaving in a stable manner again.
+# -----------------------------------------------------------------------------
+
+
+esphome:
+  name: uptime_test
+  platform: ESP8266
+  board: nodemcuv2
+
+
+wifi:
+  networks:
+    - ssid: !secret wifi_ssid_1
+      password: !secret wifi_password_1
+    - ssid: !secret wifi_ssid_2
+      password: !secret wifi_password_2
+    - ssid: !secret wifi_ssid_3
+      password: !secret wifi_password_3
+  power_save_mode: none
+  reboot_timeout: 300s
+ 
+ota:
+  safe_mode: True
+  password: !secret ota_password
+
+logger:
+  level: VERBOSE
+  
+api:
+
+
+sensor:
+
+  - platform: uptime
+    name: "Uptime"
+
+  - platform: wifi_signal
+    name: "Balcony WiFi Signal"
+
