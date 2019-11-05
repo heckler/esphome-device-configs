@@ -1,5 +1,5 @@
 # -----------------------------------------------------------------------------
-# ESPHome config file for the second version of the balcony sensors module
+# ESPHome config file for the second version of the Balcony 02 sensors module
 # CAH 2019-11-01
 #
 # This board has a BME280 temperature, humidity and barometric pressure sensor,
@@ -30,6 +30,9 @@ esphome:
   name: balcony_sensors_02
   platform: ESP8266
   board: nodemcuv2
+  on_boot:
+    then:
+      - display.page.show: page2
 
 wifi:
   networks:
@@ -42,7 +45,7 @@ wifi:
   power_save_mode: none
   reboot_timeout: 300s
   ap:
-    ssid: Balcony 02 Fallback Hotspot
+    ssid: Balcony 02 02 Fallback Hotspot
     password: !secret ap_password
 
 captive_portal:
@@ -111,30 +114,30 @@ binary_sensor:
 sensor:
 
   # BME280: https://esphome.io/components/sensor/bme280.html
-  - platform: bme280
-    temperature:
-      name: "Balcony Temperature"
-      oversampling: 16x
-    pressure:
-      name: "Balcony Pressure"
-    humidity:
-      name: "Balcony Humidity"
-    address: 0x77
-    update_interval: 60s
+  # - platform: bme280
+  #   temperature:
+  #     name: "Balcony 02 Temperature"
+  #     oversampling: 16x
+  #   pressure:
+  #     name: "Balcony 02 Pressure"
+  #   humidity:
+  #     name: "Balcony 02 Humidity"
+  #   address: 0x77
+  #   update_interval: 60s
 
   - platform: wifi_signal
-    name: "Balcony WiFi Signal"
+    name: "Balcony 02 WiFi Signal"
 
   - platform: uptime
-    name: "Balcony Uptime"
+    name: "Balcony 02 Uptime"
     id: uptime_sensor
 
 
 text_sensor:
   - platform: version
-    name: "Balcony Version"
+    name: "Balcony 02 Version"
 
 
 switch:
   - platform: restart
-    name: "Balcony Restart"
+    name: "Balcony 02 Restart"
