@@ -39,8 +39,4 @@ api:
 sensor:
 
   - platform: uptime
-    name: "Uptime"
-
-  - platform: wifi_signal
-    name: "Balcony WiFi Signal"
-
+    name: "Uptime Test - uptime"
