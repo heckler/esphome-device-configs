@@ -2,11 +2,11 @@
 # ESPHome config file for the second version of the Balcony 02 sensors module
 # CAH 2019-11-01
 #
-# This board has a BME280 temperature, humidity and barometric pressure sensor,
+# This board has a BMP280 temperature and barometric pressure sensor,
 # a PIR motion sensor and an SSD1306 monochrome OLED display; BME280 and the 
 # SSD1306 are connected to the same I2C bus, and the PIR has its own GPIO.
 #
-#   BME280      I2C bus
+#   BMP280      I2C bus
 #   SSD1306     I2C bus
 #   PIR         GPIO-05 / D1
 #   I2C SDA     GPIO-12 / D6
@@ -76,6 +76,7 @@ display:
   - platform: ssd1306_i2c
     model: "SSD1306 128x64"
     id: my_display
+    i2c_id: bus_a
     address: 0x3C
     rotation: 180
     update_interval: 2s
@@ -113,17 +114,16 @@ binary_sensor:
 
 sensor:
 
-  # BME280: https://esphome.io/components/sensor/bme280.html
-  # - platform: bme280
-  #   temperature:
-  #     name: "Balcony 02 Temperature"
-  #     oversampling: 16x
-  #   pressure:
-  #     name: "Balcony 02 Pressure"
-  #   humidity:
-  #     name: "Balcony 02 Humidity"
-  #   address: 0x77
-  #   update_interval: 60s
+  # BMP280: https://esphome.io/components/sensor/bmp280.html
+  - platform: bmp280
+    i2c_id: bus_a
+    temperature:
+      name: "Balcony 02 Temperature"
+      oversampling: 16x
+    pressure:
+      name: "Balcony 02 Pressure"
+    address: 0x77
+    update_interval: 60s
 
   - platform: wifi_signal
     name: "Balcony 02 WiFi Signal"
