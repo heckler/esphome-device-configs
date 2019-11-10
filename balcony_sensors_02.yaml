@@ -12,6 +12,8 @@
 #   I2C SDA     GPIO-12 / D6
 #   I2C SLC     GPIO-13 / D7
 #   Status      GPIO-O2 / D4 (built-in LED)
+#   DHT-22      GPIO-14 / D5
+#   DHT-22      GPIO-04 / D2
 #
 # A simple automation is defined in the device to display the sensor data
 # for a short period of time when motion is detected by the PIR.
@@ -136,6 +138,23 @@ sensor:
       name: "Balcony 02 Pressure"
     address: 0x77
     update_interval: 60s
+
+  # # DHT-22 on the outside (balcony): 
+  # # only collect humidity (temperature comes from the BMP280)
+  # - platform: dht
+  #   pin: D2
+  #   humidity:
+  #     name: "Balcony 02 Humidity"
+  #   update_interval: 60s
+
+  # # DHT-22 on the inside (living room)
+  # - platform: dht
+  #   pin: D5
+  #   temperature:
+  #     name: "Living Room 02 Temperature"
+  #   humidity:
+  #     name: "Living Room 02 Humidity"
+  #   update_interval: 60s
 
   - platform: wifi_signal
     name: "Balcony 02 WiFi Signal"
