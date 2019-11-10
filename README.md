@@ -55,6 +55,10 @@ Then, navigate to the following address: [http://localhost:6052/](http://localho
 - Just before esphome starts to upload the firmware,  click the 'reset' button on the *bottom* of the module
 - After uploading the firmware, disconnect GPIO-0 from GND and hit reset again to boot the new firmware
 
+Since version `1.14.0` of ESPHome, the serial upload speed was increased from 115200 to 460800 baud. This causes problems with some USB-to-UART chips. If facing upload problems, use `esptoop.py` to upload the compiled firmware specifying a lower upload speed:
+
+`~/.local/bin/esptool.py --before default_reset --after hard_reset --baud 115200 --chip esp8266 --port /dev/ttyS4 write_flash 0x0 espcam01/.pioenvs/espcam01/firmware.bin`
+
 #### Module detection in Home-Assistant
 
 - Go to Settings > Integrations, and add a new ESPHome integration
