@@ -132,29 +132,32 @@ sensor:
   - platform: bmp280
     i2c_id: bus_a
     temperature:
-      name: "Balcony 02 Temperature"
+      name: "Balcony 02 Temperature (bmp)"
       oversampling: 16x
     pressure:
       name: "Balcony 02 Pressure"
     address: 0x77
     update_interval: 60s
 
-  # # DHT-22 on the outside (balcony): 
-  # # only collect humidity (temperature comes from the BMP280)
-  # - platform: dht
-  #   pin: D2
-  #   humidity:
-  #     name: "Balcony 02 Humidity"
-  #   update_interval: 60s
+  # DHT-22 on the outside (balcony): 
+  - platform: dht
+    model: AM2302
+    pin: D2
+    temperature:
+      name: "Balcony 02 Temperature (dht)"
+    humidity:
+      name: "Balcony 02 Humidity"
+    update_interval: 60s
 
-  # # DHT-22 on the inside (living room)
-  # - platform: dht
-  #   pin: D5
-  #   temperature:
-  #     name: "Living Room 02 Temperature"
-  #   humidity:
-  #     name: "Living Room 02 Humidity"
-  #   update_interval: 60s
+  # DHT-22 on the inside (living room)
+  - platform: dht
+    model: AM2302
+    pin: D5
+    temperature:
+      name: "Living Room 02 Temperature"
+    humidity:
+      name: "Living Room 02 Humidity"
+    update_interval: 60s
 
   - platform: wifi_signal
     name: "Balcony 02 WiFi Signal"
