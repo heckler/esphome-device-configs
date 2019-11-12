@@ -86,15 +86,22 @@ display:
       - id: page1
         lambda: |-
           it.rectangle(0, 0, 128, 64);
-          it.printf(5, 22, id(font1), TextAlign::BOTTOM_LEFT, "T");
-          it.printf(5, 42, id(font1), TextAlign::BOTTOM_LEFT, "H");
-          it.printf(5, 62, id(font1), TextAlign::BOTTOM_LEFT, "P");
-          it.printf(70, 22, id(font1), TextAlign::BOTTOM_RIGHT, "23.4");
+          // measurement indicator letter:
+          it.printf(5, 22, id(font1), TextAlign::BOTTOM_LEFT, "t");
+          it.printf(5, 42, id(font1), TextAlign::BOTTOM_LEFT, "h");
+          it.printf(5, 62, id(font1), TextAlign::BOTTOM_LEFT, "p");
+          // actual sensor values:
+          //it.printf(70, 22, id(font1), TextAlign::BOTTOM_RIGHT, "23.4");
+          //it.printf(70, 42, id(font1), TextAlign::BOTTOM_RIGHT, "65.8");
+          //it.printf(70, 62, id(font1), TextAlign::BOTTOM_RIGHT, "1042");
+          it.printf(70, 22, id(font1), TextAlign::BOTTOM_RIGHT, "%4.1f", id(balcony_temperature).state);
+          it.printf(70, 42, id(font1), TextAlign::BOTTOM_RIGHT, "%4.1f", id(balcony_humidity).state);
+          it.printf(70, 62, id(font1), TextAlign::BOTTOM_RIGHT, "%4d", (int) id(balcony_pressure).state);
+          // units of measurement:
           it.printf(76, 18, id(font2), TextAlign::BOTTOM_LEFT, "°C");
-          it.printf(70, 42, id(font1), TextAlign::BOTTOM_RIGHT, "65.8");
           it.printf(78, 38, id(font2), TextAlign::BOTTOM_LEFT, "%%");
-          it.printf(70, 62, id(font1), TextAlign::BOTTOM_RIGHT, "1042");
           it.printf(78, 58, id(font2), TextAlign::BOTTOM_LEFT, "hPa");
+          // trend indicators:
           it.printf(120, 22, id(font1), TextAlign::BOTTOM_RIGHT, "/");
           it.printf(120, 42, id(font1), TextAlign::BOTTOM_RIGHT, "=");
           it.printf(120, 62, id(font1), TextAlign::BOTTOM_RIGHT, "\\");
@@ -133,9 +140,11 @@ sensor:
     i2c_id: bus_a
     temperature:
       name: "Balcony 02 Temperature (bmp)"
+      id: balcony_temperature
       oversampling: 16x
     pressure:
       name: "Balcony 02 Pressure"
+      id: balcony_pressure
     address: 0x77
     update_interval: 60s
 
@@ -147,6 +156,7 @@ sensor:
       name: "Balcony 02 Temperature (dht)"
     humidity:
       name: "Balcony 02 Humidity"
+      id: balcony_humidity
     update_interval: 60s
 
   # DHT-22 on the inside (living room)
