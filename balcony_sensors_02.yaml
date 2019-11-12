@@ -35,6 +35,10 @@ esphome:
   on_boot:
     then:
       - display.page.show: page2
+      - lambda: |-
+          id(temperature_trend) = '=';
+          id(humidity_trend) = '=';
+          id(pressure_trend) = '=';
 
 wifi:
   networks:
@@ -73,6 +77,32 @@ i2c:
   scan: True
   id: bus_a
 
+
+# global variables for keeping a running average of sensor values, and trend indicator characters:
+globals:
+  - id: average_temperature
+    type: float
+    restore_value: no
+    initial_value: '-10000.0'
+  - id: average_humidity
+    type: float
+    restore_value: no
+    initial_value: '-10000.0'
+  - id: average_pressure
+    type: float
+    restore_value: no
+    initial_value: '-10000.0'
+  - id: temperature_trend
+    type: char
+    restore_value: no
+  - id: humidity_trend
+    type: char
+    restore_value: no
+  - id: pressure_trend
+    type: char
+    restore_value: no
+
+
 # SSD1306 display: https://esphome.io/components/display/ssd1306.html
 display:
   - platform: ssd1306_i2c
@@ -91,9 +121,6 @@ display:
           it.printf(5, 42, id(font1), TextAlign::BOTTOM_LEFT, "h");
           it.printf(5, 62, id(font1), TextAlign::BOTTOM_LEFT, "p");
           // actual sensor values:
-          //it.printf(70, 22, id(font1), TextAlign::BOTTOM_RIGHT, "23.4");
-          //it.printf(70, 42, id(font1), TextAlign::BOTTOM_RIGHT, "65.8");
-          //it.printf(70, 62, id(font1), TextAlign::BOTTOM_RIGHT, "1042");
           it.printf(70, 22, id(font1), TextAlign::BOTTOM_RIGHT, "%4.1f", id(balcony_temperature).state);
           it.printf(70, 42, id(font1), TextAlign::BOTTOM_RIGHT, "%4.1f", id(balcony_humidity).state);
           it.printf(70, 62, id(font1), TextAlign::BOTTOM_RIGHT, "%4d", (int) id(balcony_pressure).state);
@@ -102,9 +129,9 @@ display:
           it.printf(78, 38, id(font2), TextAlign::BOTTOM_LEFT, "%%");
           it.printf(78, 58, id(font2), TextAlign::BOTTOM_LEFT, "hPa");
           // trend indicators:
-          it.printf(120, 22, id(font1), TextAlign::BOTTOM_RIGHT, "/");
-          it.printf(120, 42, id(font1), TextAlign::BOTTOM_RIGHT, "=");
-          it.printf(120, 62, id(font1), TextAlign::BOTTOM_RIGHT, "\\");
+          it.printf(120, 22, id(font1), TextAlign::BOTTOM_RIGHT, "%c", id(temperature_trend));
+          it.printf(120, 42, id(font1), TextAlign::BOTTOM_RIGHT, "%c", id(humidity_trend));
+          it.printf(120, 62, id(font1), TextAlign::BOTTOM_RIGHT, "%c", id(pressure_trend));
       - id: page2
         lambda: |-
           it.fill(COLOR_OFF);
@@ -142,9 +169,41 @@ sensor:
       name: "Balcony 02 Temperature (bmp)"
       id: balcony_temperature
       oversampling: 16x
+      on_value:
+        lambda: |-
+          float old_value = (float) id(average_temperature);
+          if (id(average_temperature) < -1000)
+            id(average_temperature) = (float) x;
+          else
+            id(average_temperature) = (4*id(average_temperature) + x) / 5;
+          float delta = (float) x - id(average_temperature);
+          if (fabs(delta) <= 0.2)
+            id(temperature_trend) = '=';
+          else
+            if (delta > 0)
+              id(temperature_trend) = '/';
+            else
+              id(temperature_trend) = '\\';
+          ESP_LOGV("main", "=========> Updating average_temperature; old: %.4f,    read: %.4f    new: %.4f    trend: %c", old_value, x, id(average_temperature), id(temperature_trend));
     pressure:
       name: "Balcony 02 Pressure"
       id: balcony_pressure
+      on_value:
+        lambda: |-
+          float old_value = (float) id(average_pressure);
+          if (id(average_pressure) < -1000)
+            id(average_pressure) = (float) x;
+          else
+            id(average_pressure) = (4*id(average_pressure) + x) / 5;
+          float delta = (float) x - id(average_pressure);
+          if (fabs(delta) <= 0.2)
+            id(pressure_trend) = '=';
+          else
+            if (delta > 0)
+              id(pressure_trend) = '/';
+            else
+              id(pressure_trend) = '\\';
+          ESP_LOGV("main", "=========> Updating average_pressure; old: %.4f,    read: %.4f    new: %.4f    trend: %c", old_value, x, id(average_pressure), id(pressure_trend));
     address: 0x77
     update_interval: 60s
 
@@ -157,6 +216,22 @@ sensor:
     humidity:
       name: "Balcony 02 Humidity"
       id: balcony_humidity
+      on_value:
+        lambda: |-
+          float old_value = (float) id(average_humidity);
+          if (id(average_humidity) < -1000)
+            id(average_humidity) = (float) x;
+          else
+            id(average_humidity) = (4*id(average_humidity) + x) / 5;
+          float delta = (float) x - id(average_humidity);
+          if (fabs(delta) <= 0.2)
+            id(humidity_trend) = '=';
+          else
+            if (delta > 0)
+              id(humidity_trend) = '/';
+            else
+              id(humidity_trend) = '\\';
+          ESP_LOGV("main", "=========> Updating average_humidity; old: %.4f,    read: %.4f    new: %.4f    trend: %c", old_value, x, id(average_humidity), id(humidity_trend));
     update_interval: 60s
 
   # DHT-22 on the inside (living room)
