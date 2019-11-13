@@ -9,6 +9,13 @@
 # -----------------------------------------------------------------------------
 
 
+#
+# TODO: bugs to report in esphome:
+#   - 1. failure to initialize variables of type 'char'
+#   - 2. compiler warning when font glyphs include '/'
+# 
+
+
 esphome:
   name: uptime_test
   platform: ESP8266
