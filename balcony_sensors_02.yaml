@@ -165,10 +165,17 @@ sensor:
   # BMP280: https://esphome.io/components/sensor/bmp280.html
   - platform: bmp280
     i2c_id: bus_a
+    address: 0x77
+    update_interval: 10s
     temperature:
       name: "Balcony 02 Temperature (bmp)"
       id: balcony_temperature
       oversampling: 16x
+      filters:
+        - median:
+            window_size: 5
+            send_every: 5
+            send_first_at: 3
       on_value:
         lambda: |-
           float old_value = (float) id(average_temperature);
@@ -188,6 +195,11 @@ sensor:
     pressure:
       name: "Balcony 02 Pressure"
       id: balcony_pressure
+      filters:
+        - median:
+            window_size: 5
+            send_every: 5
+            send_first_at: 3
       on_value:
         lambda: |-
           float old_value = (float) id(average_pressure);
@@ -204,18 +216,23 @@ sensor:
             else
               id(pressure_trend) = '\\';
           ESP_LOGV("main", "=========> Updating average_pressure; old: %.4f,    read: %.4f    new: %.4f    trend: %c", old_value, x, id(average_pressure), id(pressure_trend));
-    address: 0x77
-    update_interval: 60s
 
   # DHT-22 on the outside (balcony): 
   - platform: dht
     model: AM2302
     pin: D2
+    update_interval: 10s
     temperature:
       name: "Balcony 02 Temperature (dht)"
+      internal: True
     humidity:
       name: "Balcony 02 Humidity"
       id: balcony_humidity
+      filters:
+        - median:
+            window_size: 5
+            send_every: 5
+            send_first_at: 3
       on_value:
         lambda: |-
           float old_value = (float) id(average_humidity);
@@ -232,17 +249,26 @@ sensor:
             else
               id(humidity_trend) = '\\';
           ESP_LOGV("main", "=========> Updating average_humidity; old: %.4f,    read: %.4f    new: %.4f    trend: %c", old_value, x, id(average_humidity), id(humidity_trend));
-    update_interval: 60s
 
   # DHT-22 on the inside (living room)
   - platform: dht
     model: AM2302
     pin: D5
+    update_interval: 10s
     temperature:
       name: "Living Room 02 Temperature"
+      filters:
+        - median:
+            window_size: 5
+            send_every: 5
+            send_first_at: 3
     humidity:
       name: "Living Room 02 Humidity"
-    update_interval: 60s
+      filters:
+        - median:
+            window_size: 5
+            send_every: 5
+            send_first_at: 3
 
   - platform: wifi_signal
     name: "Balcony 02 WiFi Signal"
