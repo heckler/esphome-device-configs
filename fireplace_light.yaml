@@ -31,8 +31,6 @@ api:
 logger:
   level: DEBUG
 
-ota:
-
 binary_sensor:
   - platform: gpio
     pin:

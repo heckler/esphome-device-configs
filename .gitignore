@@ -11,4 +11,5 @@ esp32cam01/*
 esp32cam02/*
 pir_test/*
 uptime_test/*
+fireplace_light/*
 
