@@ -11,6 +11,11 @@ For information on removing secrets from the repository, see this link: <https:/
 - Getting started guide: [ESPHome Getting Started](https://esphome.io/guides/getting_started_command_line.html)
 - WSL: ESPHome should already be configured via the wsl_provision bootstrap script
 
+To update ESPHome:
+
+> pip3 install --upgrade esphome
+> pip3 install --upgrade virtualenv
+
 ### Creating a new device config (using the wizard)
 
 `esphome hello-world.yaml wizard`
