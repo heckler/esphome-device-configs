@@ -1,8 +1,8 @@
 # ESPHome Device Configs
 
-CAH, 2019-03-26
+CAH, 2019-03-26 Configuration definitions for local ESPHome devices.
 
-Configuration definitions for local ESPHome devices.
+For information on removing secrets from the repository, see this link: <https://github.com/heckler/home-assistant-config/blob/master/secrets_cleanup.md>
 
 ## Initial configuration
 
