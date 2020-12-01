@@ -1,5 +1,7 @@
 # Flashing a Sonoff Basic device with ESPHome
 
+CAH 2020-07-19
+
 ## References
 
 - <https://esphome.io/devices/sonoff_basic.html>
