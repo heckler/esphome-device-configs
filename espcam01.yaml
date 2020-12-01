@@ -2,6 +2,9 @@
 # ESPHome config file for the ESP32Cam module 01
 # CAH 2019-10-27
 #
+# LED on the backside of the board:   GPIO33 (inverted)
+# LED on the front of the board:      GPIO4
+#
 # -----------------------------------------------------------------------------
 
 
@@ -41,8 +44,8 @@ ota:
 
 status_led:
   pin:
-    number: GPIO33
-    inverted: True
+    number: GPIO4
+    inverted: False
 
 
 # ESP32Cam configuration
