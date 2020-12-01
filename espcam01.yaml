@@ -61,6 +61,9 @@ esp32_camera:
   pixel_clock_pin: GPIO22
   resolution: 640x480
   jpeg_quality: 10
+  max_framerate: 5 fps
+  idle_framerate: 0.1 fps
+  test_pattern: false
 
 text_sensor:
   - platform: version
