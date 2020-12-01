@@ -43,6 +43,7 @@ binary_sensor:
 
 switch:
   - platform: gpio
+    icon: mdi:fireplace
     name: "Fireplace Light Relay"
     pin: GPIO12
     id: relay
