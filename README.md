@@ -23,6 +23,11 @@ To update ESPHome:
 > pip3 install --upgrade esphome
 > pip3 install --upgrade virtualenv
 
+To install a specific version:
+
+> pip3 uninstall esphome
+> pip3 install -Iv esphome==1.14.5
+
 ### Creating a new device config (using the wizard)
 
 `esphome hello-world.yaml wizard`
