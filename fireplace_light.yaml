@@ -52,3 +52,9 @@ status_led:
   pin:
     number: GPIO13
     inverted: yes
+
+sensor:
+
+  - platform: uptime
+    name: "Fireplace Light Uptime"
+    id: uptime_sensor
