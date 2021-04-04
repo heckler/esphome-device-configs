@@ -133,12 +133,12 @@ sensor:
   # inside temperature (sensor E - 0x28FFE382B11603B1)
   - platform: dallas
     address: 0xB10316B182E3FF28
-    name: "Freezer internal Temperature"
+    name: "Freezer Internal Temperature"
 
   # outside (room) temperature (sensor C - 0x28FF1C8CB11605B0)
   - platform: dallas
     address: 0xB00516B18C1CFF28
-    name: "Freezer external Temperature"
+    name: "Freezer External Temperature"
 
   - platform: wifi_signal
     name: "Freezer WiFi Signal"
