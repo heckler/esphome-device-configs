@@ -1,0 +1,158 @@
+# -----------------------------------------------------------------------------
+# ESPHome config file for a temperature sensor (and alarm) for the 
+# storege freezer
+#
+# CAH 2021-04-04
+#
+# +----------------------------------------+
+# | Description and basic information      |
+# +----------------------------------------+
+#
+# This is a NodeMCU board with a couple Dallas DS18B20 temperature sensors, 
+# one for the freezer's internal temperature and the other for the room temp.
+# There is also a passive buzzer to serve as an alarm sound.
+#
+#   DS18B20     GPIO-13 / D7
+#   Buzzer      GPIO-04 / D2
+#   Status      GPIO-O2 / D4 (built-in LED)
+#
+#
+# +----------------------------------------+
+# | Playing arbitraty songs with RTTTL     |
+# +----------------------------------------+
+#
+# A simple automation is defined to sound the alarm in the device should the
+# internal temperature become too high.  Other automations (like messaging)
+# are handled in Home Asistant
+#
+# There's an exposed API endpoint for playing an arbitrary song on the buzzer. 
+# To invoke it, open HA's developer tools, and call:
+#        esphome.freezer_sensors_rtttl_play 
+# 
+# and in the service data field enter the song, for example:
+#        song_str: "mario:d=4,o=5,b=100:16e6,16e6,32p,8e6,16c6,8e6,8g6,8p,8g,8p,8c6,16p,8g,16p,8e,16p,8a,8b,16a#,8a,16g.,16e6,16g6,8a6,16f6,8g6,8e6,16c6,16d6,8b,16p,8c6,16p,8g,16p,8e,16p,8a,8b,16a#,8a,16g.,16e6,16g6,8a6,16f6,8g6,8e6,16c6,16d6,8b,8p,16g6,16f#6,16f6,16d#6,16p,16e6,16p,16g#,16a,16c6,16p,16a,16c6,16d6,8p,16g6,16f#6,16f6,16d#6,16p,16e6,16p,16c7,16p,16c7,16c7,p,16g6,16f#6,16f6,16d#6,16p,16e6,16p,16g#,16a,16c6,16p,16a,16c6,16d6,8p,16d#6,8p,16d6,8p,16c6"
+#
+#
+# +----------------------------------------+
+# | Conecting sensors and the buzzer       |
+# +----------------------------------------+
+#
+# The two Dallas temperature sensors are wired to +3.3 and ground, and their data
+# pins are wired together (in paralel) to D7, without any pullup resistor.
+# 
+# The buzzer uses a BC-548 NPN transistor as a driver, with a 220 ohm
+# resistor from D2 to the base of the transistor; its emissor is connected to
+# ground and its collector goes to the negative lead of the buzzer, with the
+# positive lead to 3.3v.  A fliback diode is wired in paralel with the buzzer
+# to arrest any reverse voltage spikes.
+#
+# 
+# +----------------------------------------+
+# | Relevant information                   |
+# +----------------------------------------+
+#
+#   - https://diyi0t.com/active-passive-buzzer-arduino-esp8266-esp32/
+#   - https://esphome.io/components/rtttl.html
+#   - https://en.wikipedia.org/wiki/Ring_Tone_Transfer_Language
+# 
+# 
+# -----------------------------------------------------------------------------
+
+esphome:
+  name: freezer_sensors
+  platform: ESP8266
+  board: nodemcuv2
+
+  on_boot:
+    then:
+      #- rtttl.play: 'MissionImp:d=16,o=6,b=95:32d,32d#,32d,32d#,32d,32d#,32d,32d#,32d,32d,32d#,32e,32f,32f#,32g,g,8p,g,8p,a#,p,c7,p,g,8p,g,8p,f,p,f#,p,g,8p,g,8p,a#,p,c7,p,g,8p,g,8p,f,p,f#,p,a#,g,2d,32p,a#,g,2c#,32p,a#,g,2c,a#5,8c,2p,32p,a#5,g5,2f#,32p,a#5,g5,2f,32p,a#5,g5,2e,d#,8d'
+      - rtttl.play: 'mario:d=4,o=5,b=100:16e6,16e6,32p,8e6,16c6,8e6,8g6,8p,8g,8p,8c6,16p,8g,16p,8e,16p,8a,8b,16a#,8a,16g.,16e6,16g6,8a6,16f6,8g6,8e6,16c6,16d6,8b,16p,8c6,16p,8g,16p,8e,16p,8a,8b,16a#,8a,16g.,16e6,16g6,8a6,16f6,8g6,8e6,16c6,16d6,8b,8p,16g6,16f#6,16f6,16d#6,16p,16e6,16p,16g#,16a,16c6,16p,16a,16c6,16d6,8p,16g6,16f#6,16f6,16d#6,16p,16e6,16p,16c7,16p,16c7,16c7,p,16g6,16f#6,16f6,16d#6,16p,16e6,16p,16g#,16a,16c6,16p,16a,16c6,16d6,8p,16d#6,8p,16d6,8p,16c6'
+
+
+wifi:
+  networks:
+    - ssid: !secret wifi_ssid_1
+      password: !secret wifi_password_1
+    - ssid: !secret wifi_ssid_2
+      password: !secret wifi_password_2
+    - ssid: !secret wifi_ssid_3
+      password: !secret wifi_password_3
+  power_save_mode: none
+  reboot_timeout: 300s
+  ap:
+    ssid: Freezer Fallback Hotspot
+    password: !secret ap_password
+
+captive_portal:
+
+ota:
+  safe_mode: True
+  password: !secret ota_password
+
+logger:
+  level: DEBUG
+  
+status_led:
+  pin:
+    number: D4
+    inverted: True
+
+api:
+
+  services:
+
+    # endpoint to allow playing an arbitraty song via API call
+    - service: play_rtttl
+      variables:
+        song_str: string
+      then:
+        - rtttl.play:
+            rtttl: !lambda 'return song_str;'
+
+
+# Dallas DS18B20 temperature sensor
+dallas:
+  - pin: D7
+
+
+
+# SW PWM output for the buzzer RTTTL library
+output:
+  - platform: esp8266_pwm
+    frequency: 1000 Hz
+    pin: D2
+    id: rtttl_out
+
+# RTTTL buzzer configu
+rtttl:
+  output: rtttl_out
+
+
+sensor:
+
+  # inside temperature (sensor E - 0x28FFE382B11603B1)
+  - platform: dallas
+    address: 0xB10316B182E3FF28
+    name: "Freezer internal Temperature"
+
+  # outside (room) temperature (sensor C - 0x28FF1C8CB11605B0)
+  - platform: dallas
+    address: 0xB00516B18C1CFF28
+    name: "Freezer external Temperature"
+
+  - platform: wifi_signal
+    name: "Freezer WiFi Signal"
+
+  - platform: uptime
+    name: "Freezer Uptime"
+    id: uptime_sensor
+
+
+text_sensor:
+  - platform: version
+    name: "Freezer Version"
+
+
+switch:
+  - platform: restart
+    name: "Freezer Restart"
