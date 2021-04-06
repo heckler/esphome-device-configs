@@ -65,9 +65,12 @@ esphome:
 
   on_boot:
     then:
-      #- rtttl.play: 'MissionImp:d=16,o=6,b=95:32d,32d#,32d,32d#,32d,32d#,32d,32d#,32d,32d,32d#,32e,32f,32f#,32g,g,8p,g,8p,a#,p,c7,p,g,8p,g,8p,f,p,f#,p,g,8p,g,8p,a#,p,c7,p,g,8p,g,8p,f,p,f#,p,a#,g,2d,32p,a#,g,2c#,32p,a#,g,2c,a#5,8c,2p,32p,a#5,g5,2f#,32p,a#5,g5,2f,32p,a#5,g5,2e,d#,8d'
       - rtttl.play: 'mario:d=4,o=5,b=100:16e6,16e6,32p,8e6,16c6,8e6,8g6,8p,8g,8p,8c6,16p,8g,16p,8e,16p,8a,8b,16a#,8a,16g.,16e6,16g6,8a6,16f6,8g6,8e6,16c6,16d6,8b,16p,8c6,16p,8g,16p,8e,16p,8a,8b,16a#,8a,16g.,16e6,16g6,8a6,16f6,8g6,8e6,16c6,16d6,8b,8p,16g6,16f#6,16f6,16d#6,16p,16e6,16p,16g#,16a,16c6,16p,16a,16c6,16d6,8p,16g6,16f#6,16f6,16d#6,16p,16e6,16p,16c7,16p,16c7,16c7,p,16g6,16f#6,16f6,16d#6,16p,16e6,16p,16g#,16a,16c6,16p,16a,16c6,16d6,8p,16d#6,8p,16d6,8p,16c6'
 
+
+# -----------------------------------------------------------------------------
+# WiFi and configuration settings
+# -----------------------------------------------------------------------------
 
 wifi:
   networks:
@@ -97,6 +100,11 @@ status_led:
     number: D4
     inverted: True
 
+
+# -----------------------------------------------------------------------------
+# API settings
+# -----------------------------------------------------------------------------
+
 api:
 
   services:
@@ -110,11 +118,14 @@ api:
             rtttl: !lambda 'return song_str;'
 
 
+
+# -----------------------------------------------------------------------------
+# I/O
+# -----------------------------------------------------------------------------
+
 # Dallas DS18B20 temperature sensor
 dallas:
   - pin: D7
-
-
 
 # SW PWM output for the buzzer RTTTL library
 output:
@@ -123,20 +134,50 @@ output:
     pin: D2
     id: rtttl_out
 
-# RTTTL buzzer configu
+# RTTTL buzzer configuration
 rtttl:
   output: rtttl_out
 
+
+
+# -----------------------------------------------------------------------------
+# Scripts
+# -----------------------------------------------------------------------------
+
+script:
+
+  # script to play an alarm sound in a loop while the temperature is above the max value
+  id: sound_alarm
+  mode: single
+  then:
+  - while:
+      condition:
+        lambda: |-
+          return id(freezer_internal_temperature).state > -10.0;
+      then:
+        - rtttl.play: 'MissionImp:d=16,o=6,b=95:32d,32d#,32d,32d#,32d,32d#,32d,32d#,32d,32d,32d#,32e,32f,32f#,32g,g,8p,g,8p,a#,p,c7,p,g,8p,g,8p,f,p,f#,p,g,8p,g,8p,a#,p,c7,p,g,8p,g,8p,f,p,f#,p,a#,g,2d,32p,a#,g,2c#,32p,a#,g,2c,a#5,8c,2p,32p,a#5,g5,2f#,32p,a#5,g5,2f,32p,a#5,g5,2e,d#,8d'
+        - delay: 22s
+
+
+# -----------------------------------------------------------------------------
+# Sensors
+# -----------------------------------------------------------------------------
 
 sensor:
 
   # inside temperature (sensor E - 0x28FFE382B11603B1)
   - platform: dallas
+    id: freezer_internal_temperature
     address: 0xB10316B182E3FF28
     name: "Freezer Internal Temperature"
+    on_value_range:
+      - above: -10.0
+        then:
+          - script.execute: sound_alarm
 
   # outside (room) temperature (sensor C - 0x28FF1C8CB11605B0)
   - platform: dallas
+    id: freezer_external_temperature
     address: 0xB00516B18C1CFF28
     name: "Freezer External Temperature"
 
