@@ -1,20 +1,19 @@
 # -----------------------------------------------------------------------------
-# ESPHome config file for a temperature sensor (and alarm) for the 
-# storage freezer
+# ESPHome config file for a temperature sensor (and alarm) for the fridge
 #
-# CAH 2021-04-04
+# CAH 2021-04-21
 #
 # +----------------------------------------+
 # | Description and basic information      |
 # +----------------------------------------+
 #
 # This is a NodeMCU board with a couple Dallas DS18B20 temperature sensors, 
-# one for the freezer's internal temperature and the other for the room temp.
+# one for the fridge's internal temperature and the other for the room temp.
 # There is also a passive buzzer to serve as an alarm sound.
 #
 #   DS18B20     GPIO-13 / D7
 #   Buzzer      GPIO-04 / D2
-#   Status      GPIO-O2 / D4 (built-in LED)
+#   Status      GPIO-14 / D5
 #
 #
 # +----------------------------------------+
@@ -27,7 +26,7 @@
 #
 # There's an exposed API endpoint for playing an arbitrary song on the buzzer. 
 # To invoke it, open HA's developer tools, and call:
-#        esphome.freezer_sensors_rtttl_play 
+#        esphome.fridge_sensors_rtttl_play 
 # 
 # and in the service data field enter the song, for example:
 #        song_str: "mario:d=4,o=5,b=100:16e6,16e6,32p,8e6,16c6,8e6,8g6,8p,8g,8p,8c6,16p,8g,16p,8e,16p,8a,8b,16a#,8a,16g.,16e6,16g6,8a6,16f6,8g6,8e6,16c6,16d6,8b,16p,8c6,16p,8g,16p,8e,16p,8a,8b,16a#,8a,16g.,16e6,16g6,8a6,16f6,8g6,8e6,16c6,16d6,8b,8p,16g6,16f#6,16f6,16d#6,16p,16e6,16p,16g#,16a,16c6,16p,16a,16c6,16d6,8p,16g6,16f#6,16f6,16d#6,16p,16e6,16p,16c7,16p,16c7,16c7,p,16g6,16f#6,16f6,16d#6,16p,16e6,16p,16g#,16a,16c6,16p,16a,16c6,16d6,8p,16d#6,8p,16d6,8p,16c6"
@@ -59,7 +58,7 @@
 # -----------------------------------------------------------------------------
 
 esphome:
-  name: freezer_sensors
+  name: fridge_sensors
   platform: ESP8266
   board: nodemcuv2
 
@@ -83,7 +82,7 @@ wifi:
   power_save_mode: none
   reboot_timeout: 300s
   ap:
-    ssid: Freezer Fallback Hotspot
+    ssid: fridge Fallback Hotspot
     password: !secret ap_password
 
 captive_portal:
@@ -97,8 +96,8 @@ logger:
   
 status_led:
   pin:
-    number: D4
-    inverted: True
+    number: D5
+    inverted: False
 
 
 # -----------------------------------------------------------------------------
@@ -175,16 +174,28 @@ rtttl:
 script:
 
   # script to play an alarm sound in a loop while the temperature is above the max value
-  id: sound_alarm
-  mode: single
-  then:
-  - while:
-      condition:
-        lambda: |-
-          return id(freezer_internal_temperature).state > -10.0;
-      then:
-        - rtttl.play: 'MissionImp:d=16,o=6,b=95:32d,32d#,32d,32d#,32d,32d#,32d,32d#,32d,32d,32d#,32e,32f,32f#,32g,g,8p,g,8p,a#,p,c7,p,g,8p,g,8p,f,p,f#,p,g,8p,g,8p,a#,p,c7,p,g,8p,g,8p,f,p,f#,p,a#,g,2d,32p,a#,g,2c#,32p,a#,g,2c,a#5,8c,2p,32p,a#5,g5,2f#,32p,a#5,g5,2f,32p,a#5,g5,2e,d#,8d'
-        - delay: 22s
+  - id: sound_main_alarm
+    mode: single
+    then:
+    - while:
+        condition:
+          lambda: |-
+            return id(fridge_main_temperature).state > 10.0;
+        then:
+          #- rtttl.play: 'MissionImp:d=16,o=6,b=95:32d,32d#,32d,32d#,32d,32d#,32d,32d#,32d,32d,32d#,32e,32f,32f#,32g,g,8p,g,8p,a#,p,c7,p,g,8p,g,8p,f,p,f#,p,g,8p,g,8p,a#,p,c7,p,g,8p,g,8p,f,p,f#,p,a#,g,2d,32p,a#,g,2c#,32p,a#,g,2c,a#5,8c,2p,32p,a#5,g5,2f#,32p,a#5,g5,2f,32p,a#5,g5,2e,d#,8d'
+          - delay: 30s
+
+  # script to play an alarm sound in a loop while the temperature is above the max value
+  - id: sound_freezer_alarm
+    mode: single
+    then:
+    - while:
+        condition:
+          lambda: |-
+            return id(fridge_freezer_temperature).state > -10.0;
+        then:
+          #- rtttl.play: 'MissionImp:d=16,o=6,b=95:32d,32d#,32d,32d#,32d,32d#,32d,32d#,32d,32d,32d#,32e,32f,32f#,32g,g,8p,g,8p,a#,p,c7,p,g,8p,g,8p,f,p,f#,p,g,8p,g,8p,a#,p,c7,p,g,8p,g,8p,f,p,f#,p,a#,g,2d,32p,a#,g,2c#,32p,a#,g,2c,a#5,8c,2p,32p,a#5,g5,2f#,32p,a#5,g5,2f,32p,a#5,g5,2e,d#,8d'
+          - delay: 30s
 
 
 # -----------------------------------------------------------------------------
@@ -193,35 +204,39 @@ script:
 
 sensor:
 
-  # inside temperature (sensor E - 0x28FFE382B11603B1)
+  # main compartment (sensor A - 0xE20316B1564CFF28)
   - platform: dallas
-    id: freezer_internal_temperature
-    address: 0xB10316B182E3FF28
-    name: "Freezer Internal Temperature"
+    id: fridge_main_temperature
+    address: 0xE20316B1564CFF28
+    name: "Fridge Main Temperature"
+    on_value_range:
+      - above: 10.0
+        then:
+          - script.execute: sound_main_alarm
+
+  # freezer compartment temperature (sensor B - 0x6B0316B1854CFF28)
+  - platform: dallas
+    id: fridge_freezer_temperature
+    address: 0x6B0316B1854CFF28
+    name: "Fridge Freezer Temperature"
     on_value_range:
       - above: -10.0
         then:
-          - script.execute: sound_alarm
-
-  # outside (room) temperature (sensor C - 0x28FF1C8CB11605B0)
-  - platform: dallas
-    id: freezer_external_temperature
-    address: 0xB00516B18C1CFF28
-    name: "Freezer External Temperature"
+          - script.execute: sound_freezer_alarm
 
   - platform: wifi_signal
-    name: "Freezer WiFi Signal"
+    name: "fridge WiFi Signal"
 
   - platform: uptime
-    name: "Freezer Uptime"
+    name: "fridge Uptime"
     id: uptime_sensor
 
 
 text_sensor:
   - platform: version
-    name: "Freezer Version"
+    name: "fridge Version"
 
 
 switch:
   - platform: restart
-    name: "Freezer Restart"
+    name: "fridge Restart"

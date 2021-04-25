@@ -13,3 +13,4 @@ pir_test/*
 uptime_test/*
 fireplace_light/*
 freezer_sensors/*
+fridge_sensors/*
