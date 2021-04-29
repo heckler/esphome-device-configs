@@ -62,10 +62,6 @@ esphome:
   platform: ESP8266
   board: nodemcuv2
 
-  on_boot:
-    then:
-      - rtttl.play: 'startup:d=12,o=5,b=100:16e6,16e6,16e6,16e6'
-
 
 # -----------------------------------------------------------------------------
 # WiFi and configuration settings
