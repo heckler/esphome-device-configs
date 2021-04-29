@@ -195,7 +195,7 @@ sensor:
     address: 0xB10316B182E3FF28
     name: "Freezer Internal Temperature"
     on_value_range:
-      - above: -10.0
+      - above: -7.0
         then:
           - script.execute: sound_alarm
 
