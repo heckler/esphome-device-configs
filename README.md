@@ -7,7 +7,8 @@ For information on removing secrets from the repository, see this link: <https:/
 ## Device-specific configurations
 
 - [ESP32 Camera modules](docs/esp32cam.md)
-- [Flashing Sonoff devices with ESPHome](docs/sonoff_flashing.md)
+- [Flashing Sonoff Basic devices with ESPHome](docs/flashing_sonoff_basic.md)
+- [Flashing Sonoff B1 LED bulbs with ESPHome](docs/flashing_sonoff_b1.md)
 
 ------------------------------------------------------------------------------------------------
 
