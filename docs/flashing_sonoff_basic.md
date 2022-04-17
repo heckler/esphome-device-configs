@@ -10,11 +10,11 @@ CAH 2020-07-19
 
 ## Wiring
 
-- For this procedure the Sonoff must be disconnected from mains power
-- the Sonoff is a 3v3 device, connecting it to a 5v supply will damage the board
+- For this procedure the Sonoff Basic must be disconnected from mains power
+- Sonoff Basic is a 3v3 device, connecting it to a 5v supply will damage the board
 - Connect the Sonoff to a USB UART following the diagram below
 
-![Sonoff Basic UART connection diagram](../images/sonoff_serial_connection.png)
+![Sonoff Basic UART connection diagram](../images/sonoff_basic_serial_connection.png)
 
 ## Flashing procedure
 

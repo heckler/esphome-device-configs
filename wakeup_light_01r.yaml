@@ -1,0 +1,74 @@
+# -----------------------------------------------------------------------------
+# ESPHome config file for the wake-up lights (Sonoff B1)
+# CAH 2022-04-17
+#
+# For the initial reflashing with ESPHome, refer to <docs/flashing_sonoff_b1.md>
+# -----------------------------------------------------------------------------
+
+esphome:
+  name: wakeup_light_01r
+  platform: ESP8266
+  board: esp01_1m
+  arduino_version: 2.4.2
+
+wifi:
+  networks:
+    - ssid: !secret wifi_ssid_1
+      password: !secret wifi_password_1
+    - ssid: !secret wifi_ssid_2
+      password: !secret wifi_password_2
+    - ssid: !secret wifi_ssid_3
+      password: !secret wifi_password_3
+
+captive_portal:
+
+ota:
+  safe_mode: True
+  password: !secret ota_password
+
+api:
+
+logger:
+  level: DEBUG
+
+sensor:
+
+  - platform: uptime
+    name: "Wake-up Light 01-R Uptime"
+    id: uptime_sensor
+
+
+my9231:
+  data_pin: GPIO12
+  clock_pin: GPIO14
+  num_channels: 6
+  num_chips: 2
+  bit_depth: 8
+
+output:
+  - platform: my9231
+    id: output_blue
+    channel: 0
+  - platform: my9231
+    id: output_red
+    channel: 1
+  - platform: my9231
+    id: output_green
+    channel: 2
+  - platform: my9231
+    id: output_warm_white
+    channel: 4
+  - platform: my9231
+    id: output_cold_white
+    channel: 5
+
+light:
+  - platform: rgbww
+    name: wakeup_light_01r
+    red: output_red
+    green: output_green
+    blue: output_blue
+    cold_white: output_cold_white
+    warm_white: output_warm_white
+    cold_white_color_temperature: 6500 K
+    warm_white_color_temperature: 2800 K

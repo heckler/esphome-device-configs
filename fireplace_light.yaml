@@ -1,8 +1,8 @@
 # -----------------------------------------------------------------------------
 # ESPHome config file for the fireplace accent light (Sonoff basic RF)
-# CAH 220-07-19
+# CAH 2020-07-19
 #
-# For the initial reflashing with ESPHome, refer to <docs/sonoff_flashing.md>
+# For the initial reflashing with ESPHome, refer to <docs/flashing_sonoff_basic.md>
 # -----------------------------------------------------------------------------
 
 esphome:
