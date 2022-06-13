@@ -19,6 +19,8 @@ wifi:
       password: !secret wifi_password_2
     - ssid: !secret wifi_ssid_3
       password: !secret wifi_password_3
+    - ssid: !secret wifi_ssid_4
+      password: !secret wifi_password_4
 
 captive_portal:
 
@@ -72,3 +74,7 @@ light:
     warm_white: output_warm_white
     cold_white_color_temperature: 6500 K
     warm_white_color_temperature: 2800 K
+
+switch:
+  - platform: restart
+    name: "Wake-up Light 02-G Restart"
