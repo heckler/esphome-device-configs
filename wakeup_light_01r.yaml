@@ -73,6 +73,11 @@ light:
     warm_white: output_warm_white
     cold_white_color_temperature: 6500 K
     warm_white_color_temperature: 2800 K
+    effects:
+      - pulse:
+      - random:
+      - strobe:
+      - flicker:
 
 switch:
   - platform: restart
