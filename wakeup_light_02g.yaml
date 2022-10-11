@@ -77,3 +77,7 @@ light:
 switch:
   - platform: restart
     name: "Wake-up Light 02-G Restart"
+
+text_sensor:
+  - platform: version
+    name: "Wake-up Light 02-G Version"
