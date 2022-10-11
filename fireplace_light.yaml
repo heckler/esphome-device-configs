@@ -57,3 +57,8 @@ sensor:
   - platform: uptime
     name: "Fireplace Light Uptime"
     id: uptime_sensor
+
+
+text_sensor:
+  - platform: version
+    name: "Fireplace Light Version"

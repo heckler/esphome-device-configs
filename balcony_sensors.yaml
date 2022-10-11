@@ -62,7 +62,7 @@ sensor:
 
 text_sensor:
   - platform: version
-    name: "ESPHome Version"
+    name: "Balcony Version"
 
 switch:
   - platform: restart

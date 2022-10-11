@@ -47,3 +47,7 @@ sensor:
 
   - platform: uptime
     name: "Uptime Test - uptime"
+
+text_sensor:
+  - platform: version
+    name: "Uptime Test Version"
