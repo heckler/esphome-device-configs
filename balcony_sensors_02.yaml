@@ -28,10 +28,17 @@
 #
 # -----------------------------------------------------------------------------
 
+substitutions:
+  node_hostname: balcony_sensors_02
+  node_name: "Balcony 02"
+  node_name_lv: "Living Room 02"
+
+packages:
+  device_base: !include common/device_base.yaml
+  plaform:  !include common/nodemcu.yaml
+
+
 esphome:
-  name: balcony_sensors_02
-  platform: ESP8266
-  board: nodemcuv2
   on_boot:
     then:
       - display.page.show: page2
@@ -40,35 +47,6 @@ esphome:
           id(humidity_trend) = '=';
           id(pressure_trend) = '=';
 
-wifi:
-  networks:
-    - ssid: !secret wifi_ssid_1
-      password: !secret wifi_password_1
-    - ssid: !secret wifi_ssid_2
-      password: !secret wifi_password_2
-    - ssid: !secret wifi_ssid_3
-      password: !secret wifi_password_3
-  power_save_mode: none
-  reboot_timeout: 300s
-  ap:
-    ssid: Balcony 02 02 Fallback Hotspot
-    password: !secret ap_password
-
-captive_portal:
-
-ota:
-  safe_mode: True
-  password: !secret ota_password
-
-logger:
-  level: DEBUG
-  
-status_led:
-  pin:
-    number: D4
-    inverted: True
-
-api:
 
 # I2C bus: https://esphome.io/components/i2c.html#i2c
 i2c:
@@ -150,7 +128,7 @@ font:
 binary_sensor:
   - platform: gpio
     pin: D1
-    name: "PIR Sensor"
+    name: "${node_name_lv} PIR Sensor"
     device_class: motion
     on_press:
       then:
@@ -168,7 +146,7 @@ sensor:
     address: 0x77
     update_interval: 10s
     temperature:
-      name: "Balcony 02 Temperature (bmp)"
+      name: "${node_name} Temperature (bmp)"
       id: balcony_temperature
       oversampling: 16x
       filters:
@@ -193,7 +171,7 @@ sensor:
               id(temperature_trend) = '\\';
           ESP_LOGV("main", "=========> Updating average_temperature; old: %.4f,    read: %.4f    new: %.4f    trend: %c", old_value, x, id(average_temperature), id(temperature_trend));
     pressure:
-      name: "Balcony 02 Pressure"
+      name: "${node_name} Pressure"
       id: balcony_pressure
       filters:
         - median:
@@ -223,10 +201,10 @@ sensor:
     pin: D2
     update_interval: 10s
     temperature:
-      name: "Balcony 02 Temperature (dht)"
+      name: "${node_name} Temperature (dht)"
       internal: True
     humidity:
-      name: "Balcony 02 Humidity"
+      name: "${node_name} Humidity"
       id: balcony_humidity
       filters:
         - median:
@@ -256,33 +234,17 @@ sensor:
     pin: D5
     update_interval: 10s
     temperature:
-      name: "Living Room 02 Temperature"
+      name: "${node_name_lv} Temperature"
       filters:
         - median:
             window_size: 5
             send_every: 5
             send_first_at: 3
     humidity:
-      name: "Living Room 02 Humidity"
+      name: "${node_name_lv} Humidity"
       filters:
         - median:
             window_size: 5
             send_every: 5
             send_first_at: 3
 
-  - platform: wifi_signal
-    name: "Balcony 02 WiFi Signal"
-
-  - platform: uptime
-    name: "Balcony 02 Uptime"
-    id: uptime_sensor
-
-
-text_sensor:
-  - platform: version
-    name: "Balcony 02 Version"
-
-
-switch:
-  - platform: restart
-    name: "Balcony 02 Restart"

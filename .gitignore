@@ -1,20 +1,9 @@
 
 # Ensure these YAML files are ignored, otherwise your secret data/credentials will leak.
-ip_bans.yaml
-secrets.yaml
-known_devices.yaml
-*.log
+common/ip_bans.yaml
+common/known_devices.yaml
+common/secrets.yaml
+logs/*.log
 
 .esphome/*
-balcony_sensors/*
-balcony_sensors_02/*
-esp32cam01/*
-esp32cam02/*
-pir_test/*
-uptime_test/*
-fireplace_light/*
-freezer_sensors/*
-fridge_sensors/*
-irrigation_pump/*
-wakeup_light_01r/*
-wakeup_light_02g/*
+build/*

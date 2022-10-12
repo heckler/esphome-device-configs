@@ -1,0 +1,54 @@
+# -----------------------------------------------------------------------------
+# ESPHome common base config file with shared definitions for all devices
+# CAH 2022-10-12
+#
+# See https://esphome.io/guides/configuration-types.html#substitutions
+# -----------------------------------------------------------------------------
+
+esphome:
+  name: ${node_hostname}
+  build_path: ./build/${node_hostname}
+
+
+wifi:
+  networks:
+    - ssid: !secret wifi_ssid_1
+      password: !secret wifi_password_1
+    - ssid: !secret wifi_ssid_2
+      password: !secret wifi_password_2
+    - ssid: !secret wifi_ssid_3
+      password: !secret wifi_password_3
+    - ssid: !secret wifi_ssid_4
+      password: !secret wifi_password_4
+  power_save_mode: none
+  reboot_timeout: 300s
+  ap:
+    ssid: "${node_name} Fallback Hotspot"
+    password: !secret ap_password
+
+captive_portal:
+
+ota:
+  safe_mode: True
+  password: !secret ota_password
+
+api:
+
+logger:
+  level: DEBUG
+
+sensor:
+  - platform: uptime
+    name: "${node_name} Uptime"
+    id: uptime_sensor
+  - platform: wifi_signal
+    name: "${node_name} WiFi Signal"
+
+switch:
+  - platform: restart
+    name: "${node_name} Restart"
+
+text_sensor:
+  - platform: version
+    name: "${node_name} Version"
+

@@ -1,0 +1,57 @@
+# -----------------------------------------------------------------------------
+# ESPHome common config file for Sonoff_B1 devices
+# CAH 2022-10-12
+#
+# For the initial reflashing with ESPHome, refer to <docs/flashing_sonoff_b1.md>
+# -----------------------------------------------------------------------------
+#
+# Open issues:
+#  - <https://community.home-assistant.io/t/sonoff-b1-build-is-no-longer-working-after-upgrade-of-esphome/407203/10>
+#
+# -----------------------------------------------------------------------------
+
+
+esphome:
+  platform: ESP8266
+  board: esp01_1m
+
+
+my9231:
+  data_pin: GPIO12
+  clock_pin: GPIO14
+  num_channels: 6
+  num_chips: 2
+  bit_depth: 8
+
+output:
+  - platform: my9231
+    id: output_blue
+    channel: 0
+  - platform: my9231
+    id: output_red
+    channel: 1
+  - platform: my9231
+    id: output_green
+    channel: 2
+  - platform: my9231
+    id: output_warm_white
+    channel: 4
+  - platform: my9231
+    id: output_cold_white
+    channel: 5
+
+light:
+  - platform: rgbww
+    name: wakeup_light_01r
+    red: output_red
+    green: output_green
+    blue: output_blue
+    cold_white: output_cold_white
+    warm_white: output_warm_white
+    cold_white_color_temperature: 6500 K
+    warm_white_color_temperature: 2800 K
+    effects:
+      - pulse:
+      - random:
+      - strobe:
+      - flicker:

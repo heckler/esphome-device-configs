@@ -1,0 +1,14 @@
+# -----------------------------------------------------------------------------
+# ESPHome common config file for NodeMCU ESP8266 boards
+# CAH 2022-10-12
+# -----------------------------------------------------------------------------
+
+esphome:
+  platform: ESP8266
+  board: nodemcuv2
+
+status_led:
+  pin:
+    number: D4
+    inverted: True
+

@@ -1,0 +1,39 @@
+# -----------------------------------------------------------------------------
+# ESPHome common config file for ESP32CAM ESP32 boards
+# CAH 2022-10-12
+#
+# LED on the backside of the board:   GPIO33 (inverted)
+# LED on the front of the board:      GPIO4
+#
+# -----------------------------------------------------------------------------
+
+esphome:
+  platform: ESP32
+  board: esp-wrover-kit
+
+
+status_led:
+  pin:
+    number: GPIO4
+    inverted: False
+
+
+# ESP32Cam configuration
+esp32_camera:
+  name: ESP32Cam_01
+  external_clock:
+    pin: GPIO0
+    frequency: 20MHz
+  i2c_pins:
+    sda: GPIO26
+    scl: GPIO27
+  data_pins: [GPIO5, GPIO18, GPIO19, GPIO21, GPIO36, GPIO39, GPIO34, GPIO35]
+  vsync_pin: GPIO25
+  href_pin: GPIO23
+  power_down_pin: GPIO32
+  pixel_clock_pin: GPIO22
+  resolution: 640x480
+  jpeg_quality: 10
+  max_framerate: 5 fps
+  idle_framerate: 0.1 fps
+  test_pattern: false

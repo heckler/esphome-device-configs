@@ -1,0 +1,36 @@
+# -----------------------------------------------------------------------------
+# ESPHome common config file for Sonoff Basic devices
+# CAH 2022-10-12
+#
+# For the initial reflashing with ESPHome, refer to <docs/flashing_sonoff_basic.md>
+# -----------------------------------------------------------------------------
+
+
+esphome:
+  platform: ESP8266
+  board: esp8285
+
+
+binary_sensor:
+  - platform: gpio
+    pin:
+      number: GPIO0
+      mode: INPUT_PULLUP
+      inverted: True
+    name: "${node_name} Button"
+    on_press:
+      - switch.toggle: relay
+
+
+switch:
+  - platform: gpio
+    icon: mdi:fireplace
+    name: "${node_name} Relay"
+    pin: GPIO12
+    id: relay
+
+
+status_led:
+  pin:
+    number: GPIO13
+    inverted: yes

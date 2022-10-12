@@ -7,78 +7,10 @@
 #
 # -----------------------------------------------------------------------------
 
+substitutions:
+  node_hostname: esp32cam02
+  node_name: "ESP32Cam 02"
 
-esphome:
-  name: esp32cam02
-  platform: ESP32
-  board: esp-wrover-kit
-
-wifi:
-  networks:
-    - ssid: !secret wifi_ssid_1
-      password: !secret wifi_password_1
-    - ssid: !secret wifi_ssid_2
-      password: !secret wifi_password_2
-    - ssid: !secret wifi_ssid_3
-      password: !secret wifi_password_3
-  power_save_mode: none
-  ap:
-    ssid: ESP32Cam_02 Fallback Hotspot
-    password: !secret ap_password
-
-captive_portal:
-
-# Enable logging
-logger:
-  level: DEBUG
-
-# Enable Home Assistant API
-api:
-
-
-ota:
-  safe_mode: True
-  password: !secret ota_password
-
-
-status_led:
-  pin:
-    number: GPIO4
-    inverted: False
-
-
-# ESP32Cam configuration
-esp32_camera:
-  name: ESP32Cam_02
-  external_clock:
-    pin: GPIO0
-    frequency: 20MHz
-  i2c_pins:
-    sda: GPIO26
-    scl: GPIO27
-  data_pins: [GPIO5, GPIO18, GPIO19, GPIO21, GPIO36, GPIO39, GPIO34, GPIO35]
-  vsync_pin: GPIO25
-  href_pin: GPIO23
-  power_down_pin: GPIO32
-  pixel_clock_pin: GPIO22
-  resolution: 640x480
-  jpeg_quality: 10
-  max_framerate: 5 fps
-  idle_framerate: 0.1 fps
-  test_pattern: false
-
-text_sensor:
-  - platform: version
-    name: "ESP32Cam02 Version"
-
-switch:
-  - platform: restart
-    name: "ESP32Cam02 Restart"
-
-sensor:
-
-  - platform: uptime
-    name: "ESP32Cam02 Uptime"
-
-  - platform: wifi_signal
-    name: "ESP32Cam02 WiFi Signal"
+packages:
+  device_base: !include common/device_base.yaml
+  plaform: !include common/esp32cam.yaml
