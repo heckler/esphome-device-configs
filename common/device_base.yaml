@@ -23,7 +23,7 @@ wifi:
   power_save_mode: none
   reboot_timeout: 300s
   ap:
-    ssid: "${node_name} Fallback Hotspot"
+    ssid: "${node_hostname}_hotspot"
     password: !secret ap_password
 
 captive_portal:
