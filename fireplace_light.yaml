@@ -8,8 +8,8 @@
 substitutions:
   node_hostname: fireplace_light
   node_name: "Fireplace Light"
+  switch_icon: "mdi:fireplace"
 
 packages:
   device_base: !include common/device_base.yaml
   plaform:  !include common/sonoff_basic.yaml
-

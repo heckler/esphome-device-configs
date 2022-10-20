@@ -24,7 +24,7 @@ binary_sensor:
 
 switch:
   - platform: gpio
-    icon: mdi:fireplace
+    icon: "${switch_icon}"
     name: "${node_name} Relay"
     pin: GPIO12
     id: relay
