@@ -42,7 +42,7 @@ output:
 
 light:
   - platform: rgbww
-    name: wakeup_light_01r
+    name: ${node_hostname}
     red: output_red
     green: output_green
     blue: output_blue
