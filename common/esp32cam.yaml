@@ -20,7 +20,7 @@ status_led:
 
 # ESP32Cam configuration
 esp32_camera:
-  name: ESP32Cam_01
+  name: ${node_hostname}
   external_clock:
     pin: GPIO0
     frequency: 20MHz
