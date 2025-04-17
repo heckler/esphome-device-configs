@@ -49,3 +49,12 @@ There is a simple dashboard webserver in ESPHome.  From the folder where the dev
 `esphome . dashboard`
 
 Then, navigate to the following address: [http://localhost:6052/](http://localhost:6052/)
+
+### Changing the name of a device via OTA
+
+<https://esphome.io/components/esphome.html#changing-esphome-node-name>
+
+1. Change the name of the device on the yaml
+2. Use the `use_address` WiFi option to point to the old mDNS name
+3. Upload the config, will rename the device, using the old name for OTA
+4. Remove `use_address` and upload again (to confirm it finds the new name)

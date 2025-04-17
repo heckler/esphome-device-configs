@@ -1,7 +1,14 @@
 # -----------------------------------------------------------------------------
-# ESPHome config file for a temperature sensor (and alarm) for the fridge
+# ESPHome config file for a temperature sensor (and alarm) for the 
+# dinning room at the Chacara HA instance
 #
 # CAH 2021-04-21
+#
+# Update log:
+#
+#   2025-04-17  Reassigned to Chacara, change device name from fridge_sensors to dinning_room_sensors
+#
+#
 #
 # +----------------------------------------+
 # | Description and basic information      |
@@ -59,8 +66,8 @@
 
 
 substitutions:
-  node_hostname: fridge_sensors
-  node_name: "Fridge"
+  node_hostname: dinning_room_sensors
+  node_name: "Dinning Room"
 
 packages:
   device_base: !include common/device_base.yaml
@@ -142,35 +149,6 @@ rtttl:
 
 
 
-# -----------------------------------------------------------------------------
-# Scripts
-# -----------------------------------------------------------------------------
-
-script:
-
-  # script to play an alarm sound in a loop while the temperature is above the max value
-  - id: sound_main_alarm
-    mode: single
-    then:
-    - while:
-        condition:
-          lambda: |-
-            return id(fridge_main_temperature).state > 10.0;
-        then:
-          #- rtttl.play: 'MissionImp:d=16,o=6,b=95:32d,32d#,32d,32d#,32d,32d#,32d,32d#,32d,32d,32d#,32e,32f,32f#,32g,g,8p,g,8p,a#,p,c7,p,g,8p,g,8p,f,p,f#,p,g,8p,g,8p,a#,p,c7,p,g,8p,g,8p,f,p,f#,p,a#,g,2d,32p,a#,g,2c#,32p,a#,g,2c,a#5,8c,2p,32p,a#5,g5,2f#,32p,a#5,g5,2f,32p,a#5,g5,2e,d#,8d'
-          - delay: 30s
-
-  # script to play an alarm sound in a loop while the temperature is above the max value
-  - id: sound_freezer_alarm
-    mode: single
-    then:
-    - while:
-        condition:
-          lambda: |-
-            return id(fridge_freezer_temperature).state > -10.0;
-        then:
-          #- rtttl.play: 'MissionImp:d=16,o=6,b=95:32d,32d#,32d,32d#,32d,32d#,32d,32d#,32d,32d,32d#,32e,32f,32f#,32g,g,8p,g,8p,a#,p,c7,p,g,8p,g,8p,f,p,f#,p,g,8p,g,8p,a#,p,c7,p,g,8p,g,8p,f,p,f#,p,a#,g,2d,32p,a#,g,2c#,32p,a#,g,2c,a#5,8c,2p,32p,a#5,g5,2f#,32p,a#5,g5,2f,32p,a#5,g5,2e,d#,8d'
-          - delay: 30s
 
 
 # -----------------------------------------------------------------------------
@@ -181,21 +159,13 @@ sensor:
 
   # main compartment (sensor A - 0xE20316B1564CFF28)
   - platform: dallas
-    id: fridge_main_temperature
+    id: "${node_hostname}_internal_temperature"
     address: 0xE20316B1564CFF28
-    name: "${node_name} Main Temperature"
-    on_value_range:
-      - above: 10.0
-        then:
-          - script.execute: sound_main_alarm
+    name: "${node_name} Internal Temperature"
 
   # freezer compartment temperature (sensor B - 0x6B0316B1854CFF28)
   - platform: dallas
-    id: fridge_freezer_temperature
+    id: "${node_hostname}_external_temperature"
     address: 0x6B0316B1854CFF28
-    name: "${node_name} Freezer Temperature"
-    on_value_range:
-      - above: -10.0
-        then:
-          - script.execute: sound_freezer_alarm
+    name: "${node_name} External Temperature"
 
