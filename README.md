@@ -8,6 +8,7 @@ For information on removing secrets from the repository, see this link: <https:/
 
 - [ESP32 Camera modules](docs/esp32cam.md)
 - [Flashing Sonoff Basic devices with ESPHome](docs/flashing_sonoff_basic.md)
+- [Flashing Sonoff Basic R4 (Magic Switch) devices with ESPHome](docs/flashing_sonoff_basic_r4_magic.md)
 - [Flashing Sonoff B1 LED bulbs with ESPHome](docs/flashing_sonoff_b1.md)
 - [Configuration instructions for the WLED modules](docs/wled_modules.md)
 
