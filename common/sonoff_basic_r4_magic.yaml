@@ -1,0 +1,104 @@
+# -----------------------------------------------------------------------------
+# ESPHome common config file for Sonoff Basic R4 "Magic Switch" devices
+# CAH 2025-04-26
+#
+#    Chip is ESP32-C3 (QFN32) (revision v0.4)
+#    Features: WiFi, BLE, Embedded Flash 4MB (XMC)
+#    Crystal is 40MHz
+#
+# For the initial reflashing with ESPHome, refer to <docs/flashing_sonoff_basic_r4_magic.md>
+# -----------------------------------------------------------------------------
+
+# -----------------------------------------------------------------------------
+# NOTE: enabling BLE did not work, the ESP would not boot, the logs kept repeating these lines: (captured via serial)
+#
+# See: https://github.com/esphome/issues/issues/4907
+#
+#
+#    [17:46:46]rst:0x1 (POWERON),boot:0xf (SPI_FAST_FLASH_BOOT)
+#    [17:46:46]SPIWP:0xee
+#    [17:46:46]mode:DIO, clock div:1
+#    [17:46:46]load:0x3fcd6100,len:0x438
+#    [17:46:46]load:0x403ce000,len:0x918
+#    [17:46:46]load:0x403d0000,len:0x24e4
+#    [17:46:46]entry 0x403ce000
+#    [17:46:47]ESP-ROM:esp32c3-api1-20210207
+#    [17:46:47]Build:Feb  7 2021
+#
+# -----------------------------------------------------------------------------
+
+
+esphome:
+  platformio_options:
+    board_build.mcu: esp32c3
+    board_build.variant: esp32c3
+
+
+#wifi:
+#  power_save_mode: light
+
+
+# override the default board_build.mcu and board_build.variant for ESP32-C3 boards
+# from: https://devices.esphome.io/devices/Sonoff-BASIC-R4-v1.0
+esp32:
+  variant: ESP32C3
+  board: esp32-c3-devkitm-1
+  framework:
+    type: arduino
+#    type: esp-idf
+#    sdkconfig_options:
+#      CONFIG_BT_BLE_50_FEATURES_SUPPORTED: y
+#      CONFIG_BT_BLE_42_FEATURES_SUPPORTED: y
+#      CONFIG_ESP_TASK_WDT_TIMEOUT_S: "10"
+
+
+
+#magic switch mode
+external_components:
+  - source:
+      type: git
+      url: https://github.com/ssieb/esphome_components
+    components: [ magic_switch ]
+    refresh: 1min
+
+magic_switch:
+  pin: 5
+  on_switch:
+    - switch.toggle: relay
+
+#esp32_ble_tracker:
+#  scan_parameters:
+#    active: true
+#    interval: 1100ms
+#    window: 1100ms
+
+#bluetooth_proxy:
+#  active: true
+
+binary_sensor:
+  - platform: gpio
+    name: "${node_name} Button"
+    pin:
+      number: GPIO9
+      mode:
+        input: true
+        pullup: true
+      inverted: true
+    id: button
+    on_press:
+      then:
+        - switch.toggle: relay
+
+switch:
+- platform: gpio
+  icon: "${switch_icon}"
+  name: "${node_name} Relay"
+  id: relay
+  pin:
+    number: 04
+  restore_mode: ALWAYS_OFF
+
+status_led:
+  pin:
+    number: GPIO6
+    inverted: yes

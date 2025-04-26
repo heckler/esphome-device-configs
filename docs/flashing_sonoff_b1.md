@@ -24,8 +24,8 @@ CAH 2022-04-13
 2. Apply power, holding GPIO0 to ground for a couple of seconds
 3. Release GPIO0 and start flashing the firmware
 
-    Linux: `esphome my_device.yaml run --upload-port=/dev/ttyS4`
+    Linux: `esphome my_device.yaml run --device=/dev/ttyS4`
 
-    Windows: `esphome my_device.yaml run --upload-port=COM4`
+    Windows: `esphome my_device.yaml run --device=COM4`
 
 4. Before re-assembling the device, run an OTA update to check that everything is correct

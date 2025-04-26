@@ -1,0 +1,20 @@
+# -----------------------------------------------------------------------------
+# ESPHome config placeholder for the Sonoff R4 device 03
+# CAH 2025-04-26
+#
+#    Chip is ESP32-C3 (QFN32) (revision v0.4)
+#    Features: WiFi, BLE, Embedded Flash 4MB (XMC)
+#    Crystal is 40MHz
+#    MAC: 84:fc:e6:85:6d:90
+#
+# For the initial reflashing with ESPHome, refer to <docs/flashing_sonoff_basic_r4_magic.md>
+# -----------------------------------------------------------------------------
+
+substitutions:
+  node_hostname: sonoff_basic_r4_03
+  node_name: "Sonoff Basic R4 03"
+  switch_icon: "mdi:light-switch"
+
+packages:
+  device_base: !include common/device_base.yaml
+  platform:  !include common/sonoff_basic_r4_magic.yaml

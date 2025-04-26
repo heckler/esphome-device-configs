@@ -22,6 +22,8 @@ CAH 2020-07-19
 2. Apply power, holding the button for a couple of seconds
 3. Release the button and start flashing the firmware
 
-    `esphome my_device.yaml run --upload-port=/dev/ttyS4`
+    Linux: `esphome my_device.yaml run --device=/dev/ttyS4`
+
+    Windows: `esphome my_device.yaml run --device=COM4`
 
 4. Before re-assembling the device, run an OTA update to check that everything is correct
