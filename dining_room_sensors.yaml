@@ -1,12 +1,12 @@
 # -----------------------------------------------------------------------------
 # ESPHome config file for a temperature sensor (and alarm) for the 
-# dinning room at the Chacara HA instance
+# dining room at the Chacara HA instance
 #
 # CAH 2021-04-21
 #
 # Update log:
 #
-#   2025-04-17  Reassigned to Chacara, change device name from fridge_sensors to dinning_room_sensors
+#   2025-04-17  Reassigned to Chacara, change device name from fridge_sensors to dining_room_sensors
 #
 #
 #
@@ -24,12 +24,12 @@
 #
 #
 # +----------------------------------------+
-# | Playing arbitraty songs with RTTTL     |
+# | Playing arbitrary songs with RTTTL     |
 # +----------------------------------------+
 #
 # A simple automation is defined to sound the alarm in the device should the
 # internal temperature become too high.  Other automations (like messaging)
-# are handled in Home Asistant
+# are handled in Home Assistant
 #
 # There's an exposed API endpoint for playing an arbitrary song on the buzzer. 
 # To invoke it, open HA's developer tools, and call:
@@ -39,17 +39,17 @@
 #        song_str: "mario:d=4,o=5,b=100:16e6,16e6,32p,8e6,16c6,8e6,8g6,8p,8g,8p,8c6,16p,8g,16p,8e,16p,8a,8b,16a#,8a,16g.,16e6,16g6,8a6,16f6,8g6,8e6,16c6,16d6,8b,16p,8c6,16p,8g,16p,8e,16p,8a,8b,16a#,8a,16g.,16e6,16g6,8a6,16f6,8g6,8e6,16c6,16d6,8b,8p,16g6,16f#6,16f6,16d#6,16p,16e6,16p,16g#,16a,16c6,16p,16a,16c6,16d6,8p,16g6,16f#6,16f6,16d#6,16p,16e6,16p,16c7,16p,16c7,16c7,p,16g6,16f#6,16f6,16d#6,16p,16e6,16p,16g#,16a,16c6,16p,16a,16c6,16d6,8p,16d#6,8p,16d6,8p,16c6"
 #
 #
-# +----------------------------------------+
-# | Conecting sensors and the buzzer       |
-# +----------------------------------------+
+# +-----------------------------------------+
+# | Connecting sensors and the buzzer       |
+# +-----------------------------------------+
 #
 # The two Dallas temperature sensors are wired to +3.3 and ground, and their data
-# pins are wired together (in paralel) to D7, without any pullup resistor.
+# pins are wired together (in parallel) to D7, without any pullup resistor.
 # 
 # The buzzer uses a BC-548 NPN transistor as a driver, with a 220 ohm
 # resistor from D2 to the base of the transistor; its emitter is connected to
 # ground and its collector goes to the negative lead of the buzzer, with the
-# positive lead to 3.3v.  A flyback diode is wired in paralel with the buzzer
+# positive lead to 3.3v.  A flyback diode is wired in parallel with the buzzer
 # to arrest any reverse voltage spikes.
 #
 # 
@@ -66,12 +66,12 @@
 
 
 substitutions:
-  node_hostname: dinning_room_sensors
-  node_name: "Dinning Room"
+  node_hostname: dining_room_sensors
+  node_name: "Dining Room"
 
 packages:
   device_base: !include common/device_base.yaml
-  plaform:  !include common/nodemcu.yaml
+  platform:  !include common/nodemcu.yaml
 
 
 
@@ -79,7 +79,7 @@ packages:
 status_led:
   pin:
     number: D5
-    inverted: False
+    inverted: True
 
 
 # -----------------------------------------------------------------------------
@@ -90,7 +90,7 @@ api:
 
   services:
 
-    # endpoint to allow playing an arbitraty song via API call
+    # endpoint to allow playing an arbitrary song via API call
     - service: play_rtttl
       variables:
         song_str: string
@@ -157,15 +157,14 @@ rtttl:
 
 sensor:
 
-  # main compartment (sensor A - 0xE20316B1564CFF28)
+  # internal temperature (sensor A - 0xE20316B1564CFF28)
   - platform: dallas
     id: "${node_hostname}_internal_temperature"
     address: 0xE20316B1564CFF28
     name: "${node_name} Internal Temperature"
 
-  # freezer compartment temperature (sensor B - 0x6B0316B1854CFF28)
+  # external temperature (sensor B - 0x6B0316B1854CFF28)
   - platform: dallas
     id: "${node_hostname}_external_temperature"
     address: 0x6B0316B1854CFF28
     name: "${node_name} External Temperature"
-
