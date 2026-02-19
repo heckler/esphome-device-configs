@@ -1,0 +1,21 @@
+# -----------------------------------------------------------------------------
+# ESPHome config file for the wake-up lights (Sonoff B1)
+# CAH 2026-02-18
+#
+# For the initial reflashing with ESPHome, refer to <docs/flashing_sonoff_b1.md>
+# -----------------------------------------------------------------------------
+
+#wifi:
+#  manual_ip:
+#    static_ip: 192.168.15.7
+#    gateway: 192.168.15.1
+#    subnet: 255.255.255.0
+
+
+substitutions:
+  node_hostname: wakeup_light_03c
+  node_name: "Wake-up Light 03-C"
+
+packages:
+  device_base: !include common/device_base.yaml
+  plaform:  !include common/sonoff_b1.yaml
