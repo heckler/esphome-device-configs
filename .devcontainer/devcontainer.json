@@ -1,0 +1,22 @@
+{
+  "name": "ESPHome Device Configs",
+  "image": "mcr.microsoft.com/devcontainers/python:3.12",
+  "runArgs": [
+    "--privileged"
+  ],
+  "mounts": [
+    "source=/dev,target=/dev,type=bind"
+  ],
+  "forwardPorts": [
+    6052
+  ],
+  "postCreateCommand": "python -m pip install --upgrade pip && python -m pip install --no-cache-dir esphome==2026.6.2",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "esphomeiot.esphome-vscode",
+        "redhat.vscode-yaml"
+      ]
+    }
+  }
+}

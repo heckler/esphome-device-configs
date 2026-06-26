@@ -21,6 +21,29 @@ For information on removing secrets from the repository, see this link: <https:/
 - Getting started guide: [ESPHome Getting Started](https://esphome.io/guides/getting_started_command_line.html)
 - WSL: ESPHome should already be configured via the wsl_provision bootstrap script
 
+Optional (VS Code): use the DevContainer in this repository for an isolated, reproducible ESPHome environment.
+
+1. Install the VS Code Dev Containers extension.
+2. Open this folder in VS Code and run: `Dev Containers: Reopen in Container`.
+3. Wait for the initial container build to complete. The container installs `esphome==2026.6.2` automatically.
+4. Verify the install inside the container:
+
+```bash
+esphome version
+```
+
+5. Start the dashboard from this repository root:
+
+```bash
+esphome dashboard .
+```
+
+Notes for USB serial flashing from DevContainer:
+
+1. The DevContainer config binds `/dev` and uses `--privileged`, so serial devices (for example `/dev/ttyUSB0`) are available in the container.
+2. Ensure your host user has serial permissions (typically membership in the `dialout` group on Linux).
+3. Replug USB devices after opening the container if a serial device is not visible.
+
 To update ESPHome:
 
 ```bash
@@ -32,7 +55,27 @@ To install a specific version:
 
 ```bash
 pip3 uninstall esphome
-pip3 install -Iv esphome==1.14.5
+pip3 install -Iv esphome==2026.6.2
+```
+
+The pip commands above are for local (non-DevContainer) installations.
+
+### Updating ESPHome in the DevContainer
+
+When a new ESPHome release is available, update the pinned version in the DevContainer config.
+
+1. Edit the pinned version in `.devcontainer/devcontainer.json` by changing `postCreateCommand` from `esphome==...` to the new release.
+2. In VS Code, run `Dev Containers: Rebuild Container`.
+3. Confirm the new version:
+
+```bash
+esphome version
+```
+
+4. Run a quick config validation from the repository root:
+
+```bash
+esphome config balcony_sensors.yaml
 ```
 
 ### Creating a new device config (using the wizard)
