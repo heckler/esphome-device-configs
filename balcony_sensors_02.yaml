@@ -141,7 +141,7 @@ binary_sensor:
 sensor:
 
   # BMP280: https://esphome.io/components/sensor/bmp280.html
-  - platform: bmp280
+  - platform: bmp280_i2c
     i2c_id: bus_a
     address: 0x77
     update_interval: 10s
