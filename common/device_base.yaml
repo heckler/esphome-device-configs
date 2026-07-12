@@ -35,7 +35,8 @@ web_server:
     password: !secret ota_password
 
 ota:
-  - platform: web_server
+  - platform: esphome
+    password: !secret ota_password
 
 safe_mode:
 
