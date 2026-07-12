@@ -133,8 +133,9 @@ api:
 # -----------------------------------------------------------------------------
 
 # Dallas DS18B20 temperature sensor
-dallas:
-  - pin: D7
+one_wire:
+  - platform: gpio
+    pin: D7
 
 # SW PWM output for the buzzer RTTTL library
 output:
@@ -158,13 +159,13 @@ rtttl:
 sensor:
 
   # internal temperature (sensor A - 0xE20316B1564CFF28)
-  - platform: dallas
+  - platform: dallas_temp
     id: "${node_hostname}_internal_temperature"
     address: 0xE20316B1564CFF28
     name: "${node_name} Internal Temperature"
 
   # external temperature (sensor B - 0x6B0316B1854CFF28)
-  - platform: dallas
+  - platform: dallas_temp
     id: "${node_hostname}_external_temperature"
     address: 0x6B0316B1854CFF28
     name: "${node_name} External Temperature"
