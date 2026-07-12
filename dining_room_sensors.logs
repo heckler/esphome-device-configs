@@ -1,0 +1,99 @@
+[12:57:17][I][app:149]: ESPHome version 2025.7.5 compiled on Jul 12 2026, 12:54:40
+[12:57:17][C][status_led:019]: Status LED:
+[12:57:17][C][status_led:020]:   Pin: GPIO14
+[12:57:17][C][wifi:613]: WiFi:
+[12:57:17][C][wifi:434]:   Local MAC: 68:C6:3A:80:98:67
+[12:57:17][C][wifi:439]:   SSID: 'QATSI'
+[12:57:17][C][wifi:442]:   IP Address: 192.168.1.250
+[12:57:17][C][wifi:446]:   BSSID: F0:63:F9:BE:46:E4
+[12:57:17][C][wifi:446]:   Hostname: 'dining_room_sensors'
+[12:57:17][C][wifi:446]:   Signal strength: -68 dB [12:57:17][C][wifi:455]:   Channel: 1
+[12:57:17][C][wifi:455]:   Subnet: 255.255.255.0
+[12:57:17][C][wifi:455]:   Gateway: 192.168.1.1
+[12:57:17][C][wifi:455]:   DNS1: 192.168.1.1
+[12:57:17][C][wifi:455]:   DNS2: 0.0.0.0
+[12:57:17][C][logger:246]: Logger:
+[12:57:17][C][logger:246]:   Max Level: DEBUG
+[12:57:17][C][logger:246]:   Initial Level: DEBUG
+[12:57:17][C][logger:252]:   Log Baud Rate: 115200
+[12:57:17][C][logger:252]:   Hardware UART: UART0
+[12:57:17][C][gpio.one_wire:022]: GPIO 1-wire bus:
+[12:57:17][C][gpio.one_wire:023]:   Pin: GPIO13
+[12:57:17][W][gpio.one_wire:082]:   Found no devices!
+[12:57:17][C][uptime.sensor:033]: Uptime Sensor 'Dining Room Uptime'
+[12:57:17][C][uptime.sensor:033]:   State Class: 'total_increasing'
+[12:57:17][C][uptime.sensor:033]:   Unit of Measurement: 's'
+[12:57:17][C][uptime.sensor:033]:   Accuracy Decimals: 0
+[12:57:17][C][uptime.sensor:033]:   Device Class: 'duration'
+[12:57:17][C][uptime.sensor:033]:   Icon: 'mdi:timer-outline'
+[12:57:17][C][uptime.sensor:034]:   Type: Seconds
+[12:57:17][C][esp8266_pwm:022]: ESP8266 PWM:
+[12:57:17][C][esp8266_pwm:023]:   Pin: GPIO4
+[12:57:17][C][esp8266_pwm:024]:   Frequency: 1000.0 Hz
+[12:57:17][C][dallas.temp.sensor:029]: Dallas Temperature Sensor:
+[12:57:17][C][dallas.temp.sensor:034]:   Address: 0xe20316b1564cff28 (DS18B20)
+[12:57:17][C][dallas.temp.sensor:035]:   Resolution: 12 bits
+[12:57:17][C][dallas.temp.sensor:036]:   Update Interval: 60.0s
+[12:57:17][C][dallas.temp.sensor:029]: Dallas Temperature Sensor:
+[12:57:17][C][dallas.temp.sensor:034]:   Address: 0x6b0316b1854cff28 (DS18B20)
+[12:57:17][C][dallas.temp.sensor:035]:   Resolution: 12 bits
+[12:57:17][C][dallas.temp.sensor:036]:   Update Interval: 60.0s
+[12:57:17][C][restart:079]: Restart Switch 'Dining Room Restart'
+[12:57:17][C][restart:079]:   Restore Mode: always OFF
+[12:57:17][C][restart:087]:   Icon: 'mdi:restart'
+[12:57:17][C][version.text_sensor:021]: Version Text Sensor 'Dining Room Version'
+[12:57:17][C][version.text_sensor:021]:   Icon: 'mdi:new-box'
+[12:57:17][C][rtttl:030]: Rtttl:
+[12:57:17][C][rtttl:030]:   Gain: 0.600000
+[12:57:17][C][captive_portal:099]: Captive Portal:
+[12:57:17][C][web_server:310]: Web Server:
+[12:57:17][C][web_server:310]:   Address: dining_room_sensors.local:80
+[12:57:17][C][esphome.ota:073]: Over-The-Air updates:
+[12:57:17][C][esphome.ota:073]:   Address: dining_room_sensors.local:8266
+[12:57:17][C][esphome.ota:073]:   Version: 2
+[12:57:17][C][esphome.ota:080]:   Password configured
+[12:57:17][C][safe_mode:018]: Safe Mode:
+[12:57:17][C][safe_mode:019]:   Boot considered successful after 60 seconds
+[12:57:17][C][safe_mode:019]:   Invoke after 10 boot attempts
+[12:57:17][C][safe_mode:019]:   Remain for 300 seconds
+[12:57:17][C][web_server.ota:224]: Web Server OTA
+[12:57:17][C][api:207]: API Server:
+[12:57:17][C][api:207]:   Address: dining_room_sensors.local:6053
+[12:57:17][C][api:217]:   Using noise encryption: NO
+[12:57:17][C][wifi_signal.sensor:010]: WiFi Signal 'Dining Room WiFi Signal'
+[12:57:17][C][wifi_signal.sensor:010]:   State Class: 'measurement'
+[12:57:17][C][wifi_signal.sensor:010]:   Unit of Measurement: 'dBm'
+[12:57:17][C][wifi_signal.sensor:010]:   Accuracy Decimals: 0
+[12:57:17][C][wifi_signal.sensor:010]:   Device Class: 'signal_strength'
+[12:57:17][C][mdns:122]: mDNS:
+[12:57:17][C][mdns:122]:   Hostname: dining_room_sensors
+[12:57:21][D][sensor:104]: 'Dining Room Uptime': Sending state 146.90100 s with 0 decimals of accuracy
+[12:57:25][D][sensor:104]: 'Dining Room WiFi Signal': Sending state -71.00000 dBm with 0 decimals of accuracy
+[12:57:29][W][component:307]: dallas_temp.sensor cleared Warning flag
+[12:57:29][E][one_wire:023]: 1-wire bus is held low
+[12:57:30][E][one_wire:023]: 1-wire bus is held low
+[12:57:30][W][dallas.temp.sensor:066]: 'Dining Room External Temperature' - reading scratch pad failed bus reset
+[12:57:30][W][component:279]: dallas_temp.sensor set Warning flag: bus reset failed
+[12:57:30][D][sensor:104]: 'Dining Room External Temperature': Sending state nan °C with 1 decimals of accuracy
+[12:57:31][W][component:307]: dallas_temp.sensor cleared Warning flag
+[12:57:31][E][one_wire:023]: 1-wire bus is held low
+[12:57:32][E][one_wire:023]: 1-wire bus is held low
+[12:57:32][W][dallas.temp.sensor:066]: 'Dining Room Internal Temperature' - reading scratch pad failed bus reset
+[12:57:32][W][component:279]: dallas_temp.sensor set Warning flag: bus reset failed
+[12:57:32][D][sensor:104]: 'Dining Room Internal Temperature': Sending state nan °C with 1 decimals of accuracy
+[12:58:21][D][sensor:104]: 'Dining Room Uptime': Sending state 206.90100 s with 0 decimals of accuracy
+[12:58:25][D][sensor:104]: 'Dining Room WiFi Signal': Sending state -67.00000 dBm with 0 decimals of accuracy
+[12:58:29][W][component:307]: dallas_temp.sensor cleared Warning flag
+[12:58:29][E][one_wire:023]: 1-wire bus is held low
+[12:58:30][E][one_wire:023]: 1-wire bus is held low
+[12:58:30][W][dallas.temp.sensor:066]: 'Dining Room External Temperature' - reading scratch pad failed bus reset
+[12:58:30][W][component:279]: dallas_temp.sensor set Warning flag: bus reset failed
+[12:58:30][D][sensor:104]: 'Dining Room External Temperature': Sending state nan °C with 1 decimals of accuracy
+[12:58:31][W][component:307]: dallas_temp.sensor cleared Warning flag
+[12:58:31][E][one_wire:023]: 1-wire bus is held low
+[12:58:32][E][one_wire:023]: 1-wire bus is held low
+[12:58:32][W][dallas.temp.sensor:066]: 'Dining Room Internal Temperature' - reading scratch pad failed bus reset
+[12:58:32][W][component:279]: dallas_temp.sensor set Warning flag: bus reset failed
+[12:58:32][D][sensor:104]: 'Dining Room Internal Temperature': Sending state nan °C with 1 decimals of accuracy
+[12:59:21][D][sensor:104]: 'Dining Room Uptime': Sending state 266.90100 s with 0 decimals of accuracy
+[12:59:22][D][api.connection:257]: ESPHome Logs 2025.7.5 (192.168.1.42) disconnected
