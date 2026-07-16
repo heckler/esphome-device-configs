@@ -21,18 +21,26 @@ For information on removing secrets from the repository, see this link: <https:/
 - Getting started guide: [ESPHome Getting Started](https://esphome.io/guides/getting_started_command_line.html)
 - WSL: ESPHome should already be configured via the wsl_provision bootstrap script
 
-Optional (VS Code): use the DevContainer in this repository for an isolated, reproducible ESPHome environment.
+### DevContainers on VSCode
 
-1. Install the VS Code Dev Containers extension.
+1. Install the VS Code DevContainers extension.
 2. Open this folder in VS Code and run: `Dev Containers: Reopen in Container`.
 3. Wait for the initial container build to complete. The container installs `esphome==2026.6.2` automatically.
 4. Verify the install inside the container:
+
+### DevContainers commandline on the shell
+
+1. Install the DevContainers CLI: `npm install -g @devcontainers/cli`
+2. Build and start the container: `devcontainer up --workspace-folder .`
+3. Open a shell inside it: `devcontainer exec --workspace-folder . bash`
+
+### Basic operation
 
 ```bash
 esphome version
 ```
 
-5. Start the dashboard from this repository root:
+Start the dashboard from this repository root:
 
 ```bash
 esphome dashboard .
