@@ -2,6 +2,7 @@
   "name": "ESPHome Device Configs",
   "image": "mcr.microsoft.com/devcontainers/python:3.12",
   "runArgs": [
+    "--network=host",
     "--privileged"
   ],
   "mounts": [
