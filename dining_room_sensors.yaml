@@ -18,7 +18,7 @@
 # one for the fridge's internal temperature and the other for the room temp.
 # There is also a passive buzzer to serve as an alarm sound.
 #
-#   DS18B20     GPIO-13 / D7
+#   DS18B20     GPIO-05 / D1
 #   Buzzer      GPIO-04 / D2
 #   Status      GPIO-14 / D5
 #
@@ -135,7 +135,7 @@ api:
 # Dallas DS18B20 temperature sensor
 one_wire:
   - platform: gpio
-    pin: D7
+    pin: D1
 
 # SW PWM output for the buzzer RTTTL library
 output:
