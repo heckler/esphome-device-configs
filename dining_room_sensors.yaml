@@ -7,7 +7,7 @@
 # Update log:
 #
 #   2025-04-17  Reassigned to Chacara, change device name from fridge_sensors to dining_room_sensors
-#
+#   2026-09-13  OneWire bus moved from D7 to D1, and a 4k7 pull-up to 3v
 #
 #
 # +----------------------------------------+
@@ -18,7 +18,7 @@
 # one for the fridge's internal temperature and the other for the room temp.
 # There is also a passive buzzer to serve as an alarm sound.
 #
-#   DS18B20     GPIO-05 / D1
+#   DS18B20     GPIO-05 / D1    (external 4k7 pullup to 3.3v)
 #   Buzzer      GPIO-04 / D2
 #   Status      GPIO-14 / D5
 #
@@ -132,7 +132,7 @@ api:
 # I/O
 # -----------------------------------------------------------------------------
 
-# Dallas DS18B20 temperature sensor
+# OneWire library for Dallas DS18B20 temperature sensor
 one_wire:
   - platform: gpio
     pin: D1
