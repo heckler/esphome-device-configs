@@ -4,13 +4,13 @@ CAH 2026-09-19
 
 ## Overview
 
-This is an ESP32-based device with an e-ink display (WeAct 4.2" 3-color) and a number of sensors.  Main components are:
+This is an ESP32-based device with an e-ink display (WeAct 4.2" 3-color) and a number of sensors.  It will read indoor and outdoor temperatures as well as CO2, barometric pressure and relative humidity. The main components are:
 
 - ESP32: YD-ESP32-S3 / ESP32-S3-WROOM-1 Dev N16R8 (44-pin)
-- WeAct 4.2" e-ink display
-- BME280 sensor
-- HC-SR501 PIR sensor
-- SCD41 sensor
+- WeAct 4.2" 3-color e-ink display (white, black and red)
+- BME280 sensor (Barometric pressure, temperature and relative humidity - to be placed outdoors)
+- SCD41 (CO2, temperature and relative humidity - to be placed indoors)
+- HC-SR501 PIR sensor (for updating the e-ink panel only when there's recent movement)
 - WS2812b status LED (1-5 LEDs on a strip, to be defined)
 - 2 capacitive switches for input
 
@@ -72,7 +72,7 @@ spi:
 
 display:
   - platform: epaper_spi
-    model: ...
+    model: WeAct-4.2in-3c
     cs_pin: GPIO8
     dc_pin: GPIO9
     reset_pin: GPIO10
