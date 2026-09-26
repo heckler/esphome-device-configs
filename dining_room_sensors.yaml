@@ -164,8 +164,8 @@ sensor:
     address: 0xE20316B1564CFF28
     name: "${node_name} Internal Temperature"
 
-  # external temperature (sensor B - 0x6B0316B1854CFF28)
+  # external temperature (sensor B - 0xA1000000CAED5728)
   - platform: dallas_temp
     id: "${node_hostname}_external_temperature"
-    address: 0x6B0316B1854CFF28
+    address: 0xA1000000CAED5728
     name: "${node_name} External Temperature"
