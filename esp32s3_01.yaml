@@ -1,0 +1,58 @@
+# -----------------------------------------------------------------------------
+# ESPHome config file for the ESP32-S3 module 01
+# CAH 2026-10-13
+#
+#
+# -----------------------------------------------------------------------------
+
+substitutions:
+  node_hostname: esp32s3_01
+  node_name: "ESP32-S3 01"
+
+packages:
+  device_base: !include common/device_base.yaml
+  platform: !include common/esp32s3.yaml
+
+
+spi:
+  clk_pin: GPIO6
+  mosi_pin: GPIO7
+
+http_request:
+  verify_ssl: false
+  timeout: 15s
+
+online_image:
+  - id: remote_image
+    url: "http://homeassistant.local:8123/local/epaper/screen.png"
+    format: PNG
+    type: RGB
+    resize: 400x300
+    on_download_finished:
+      - component.update: epaper
+
+display:
+  - platform: epaper_spi
+    id: epaper
+    model: WeAct-4.2in-3c
+    cs_pin: GPIO8
+    dc_pin: GPIO9
+    reset_pin: GPIO10
+    busy_pin: GPIO11
+    update_interval: never
+    lambda: |-
+      it.fill(Color::WHITE);
+      it.image(0, 0, id(remote_image));
+
+text:
+  - platform: template
+    name: "E-Paper Image URL"
+    id: image_url
+    mode: text
+    optimistic: true
+    min_length: 1
+    max_length: 255
+    set_action:
+      - online_image.set_url:
+          id: remote_image
+          url: !lambda 'return x;'

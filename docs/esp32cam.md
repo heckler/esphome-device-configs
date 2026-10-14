@@ -18,7 +18,7 @@ CAH 2019-10-27
 
 3. Upload the firmware via serial:
 
-    `esphome espcam01.yaml run --upload-port=/dev/ttyS4`
+    `esphome run espcam01.yaml --device /dev/ttyS4`
 
    - Note: `/dev/ttyS4` above corresponds to serial port `COM4`
    - Just before esphome starts to upload the firmware,  click the 'reset' button on the *bottom* of the module

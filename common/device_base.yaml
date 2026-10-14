@@ -7,6 +7,7 @@
 
 esphome:
   name: ${node_hostname}
+  friendly_name: ${node_name}
   build_path: ./build/${node_hostname}
 
 

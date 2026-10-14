@@ -1,0 +1,28 @@
+# -----------------------------------------------------------------------------
+# ESPHome common config file for ESP32-S3 boards
+# CAH 2026-10-13
+#
+# LED on the backside of the board:   GPIO33 (inverted)
+# LED on the front of the board:      GPIO4
+#
+# -----------------------------------------------------------------------------
+
+esp32:
+  board: esp32-s3-devkitc-1
+  framework:
+    type: esp-idf
+
+psram:
+  mode: octal
+  speed: 80MHz
+
+# on-board RGB LED on GPIO48
+light:
+  - platform: esp32_rmt_led_strip
+    id: onboard_rgb
+    name: "Onboard RGB LED"
+    pin: GPIO48
+    num_leds: 1
+    chipset: ws2812
+    rgb_order: GRB
+    restore_mode: ALWAYS_OFF
