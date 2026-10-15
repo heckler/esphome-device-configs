@@ -25,7 +25,7 @@ For information on removing secrets from the repository, see this link: <https:/
 
 1. Install the VS Code DevContainers extension.
 2. Open this folder in VS Code and run: `Dev Containers: Reopen in Container`.
-3. Wait for the initial container build to complete. The container installs `esphome==2026.6.2` automatically.
+3. Wait for the initial container build to complete. The container installs `esphome==2026.9.1` automatically.
 4. Verify the install inside the container:
 
 ### DevContainers commandline on the shell
