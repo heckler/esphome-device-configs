@@ -22,9 +22,10 @@ http_request:
   verify_ssl: false
   timeout: 15s
 
-online_image:
-  - id: remote_image
-    url: "http://homeassistant.local:8123/local/epaper/screen.png"
+image:
+  - platform: online_image
+    id: remote_image
+    url: http://homeassistant.local:8123/local/epaper/screen.png
     format: PNG
     type: RGB
     resize: 400x300
