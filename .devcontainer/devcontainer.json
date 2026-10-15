@@ -11,12 +11,13 @@
   "forwardPorts": [
     6052
   ],
-  "postCreateCommand": "python -m pip install --upgrade pip && python -m pip install --no-cache-dir esphome==2026.6.2",
+  "postCreateCommand": "python -m pip install --upgrade pip && python -m pip install --no-cache-dir esphome==2026.9.1",
   "customizations": {
     "vscode": {
       "extensions": [
         "esphomeiot.esphome-vscode",
-        "redhat.vscode-yaml"
+        "redhat.vscode-yaml",
+        "yzhang.markdown-all-in-one"
       ]
     }
   }
