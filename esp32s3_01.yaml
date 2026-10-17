@@ -14,9 +14,49 @@ packages:
   platform: !include common/esp32s3.yaml
 
 
+# SPI bus for the WeAct e-paper display: https://esphome.io/components/spi/
 spi:
+  id: spi_bus_weact
   clk_pin: GPIO6
   mosi_pin: GPIO7
+
+
+# I2C bus for the BME280 and SCD41 sensors: https://esphome.io/components/i2c/
+i2c:
+  id: i2c_bus_sensors
+  sda: GPIO4
+  scl: GPIO5
+  scan: True
+  frequency: 100kHz
+
+
+# SCD41 sensor: https://esphome.io/components/sensor/scd4x/
+sensor:
+  - platform: scd4x
+    i2c_id: i2c_bus_sensors
+    address: 0x62
+    measurement_mode: periodic  #low_power_periodic
+    update_interval: 5s
+    temperature_offset: 0
+    automatic_self_calibration: false
+    co2:
+      name: "${node_name} Internal CO2"
+    temperature:
+      name: "${node_name} Internal Temperature"
+    humidity:
+      name: "${node_name} Internal Humidity"
+
+
+# BME280 sensor: https://esphome.io/components/sensor/bme280/
+  - platform: bme280_i2c
+    i2c_id: i2c_bus_sensors
+    address: 0x76
+    temperature:
+      name: "${node_name} External Temperature"
+    pressure:
+      name: "${node_name} External Pressure"
+    humidity:
+      name: "${node_name} External Humidity"
 
 http_request:
   verify_ssl: false
@@ -35,6 +75,7 @@ image:
 display:
   - platform: epaper_spi
     id: epaper
+    spi_id: spi_bus_weact
     model: WeAct-4.2in-3c
     cs_pin: GPIO8
     dc_pin: GPIO9

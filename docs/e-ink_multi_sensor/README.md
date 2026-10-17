@@ -24,6 +24,15 @@ This is an ESP32-based device with an e-ink display (WeAct 4.2" 3-color) and a n
 | SCD41      | $12.81 | <https://aliexpress.com/item/1005009392057489.html> |
 | HC-SR501   |  $1.29 | <https://aliexpress.com/item/1005006438490597.html> |
 
+## BME280 Pin mapping
+
+| Color  | Function |
+| ------ | -------- |
+| Red    | VCC      |
+| Black  | GND      |
+| Green  | SDA      |
+| Yellow | SCL      |
+
 ## GPIO allocation
 
 |   GPIO | Function       | Device             | Notes                    |
