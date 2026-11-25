@@ -28,10 +28,17 @@ This is an ESP32-based device with an e-ink display (WeAct 4.2" 3-color) and a n
 
 | Color  | Function |
 | ------ | -------- |
-| Red    | VCC      |
 | Black  | GND      |
-| Green  | SDA      |
+| Red    | VCC      |
 | Yellow | SCL      |
+| Green  | SDA      |
+
+## I2C device addresses
+
+| Device | I2C bus address |
+| ------ | --------------- |
+| BME280 | 0x76            |
+| SCD41  | 0x62            |
 
 ## GPIO allocation
 
