@@ -26,3 +26,22 @@ light:
     chipset: ws2812
     rgb_order: GRB
     restore_mode: ALWAYS_OFF
+    effects:
+      - addressable_lambda:
+          name: "Status Color Cycle"
+          update_interval: 1s
+          lambda: |-
+            switch ((millis() / 1000) % 4) {
+              case 0:
+                it[0] = Color(255, 0, 0);
+                break;
+              case 1:
+                it[0] = Color(0, 255, 0);
+                break;
+              case 2:
+                it[0] = Color(0, 0, 255);
+                break;
+              default:
+                it[0] = Color(255, 255, 0);
+                break;
+            }
